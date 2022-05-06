@@ -1,0 +1,382 @@
+{
+  "widgets": {
+    "kmic8SnclikItSKQqRsnZ": {
+      "id": "MyStackThing",
+      "scope": {},
+      "x": 103,
+      "y": 96,
+      "forType": "@aws-cdk/core.Stack",
+      "initializerParameters": {
+        "env": {
+          "ref": "WIDGET#F0qnVkilE3W0XF03V-GMk",
+          "widgetShapes": {
+            "F0qnVkilE3W0XF03V-GMk": "LOOSE"
+          }
+        },
+        "description": {
+          "value": "some description",
+          "widgetShapes": {}
+        }
+      }
+    },
+    "OZjtiRABsk5H9s3Z9A2ub": {
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "id": "MyInstance",
+      "x": 547,
+      "y": 111,
+      "forType": "@aws-cdk/aws-ec2.Instance",
+      "initializerParameters": {
+        "instanceType": {
+          "ref": "WIDGET#_UxDZLU8MoM1lrOzJA1ku",
+          "widgetShapes": {
+            "_UxDZLU8MoM1lrOzJA1ku": "STATIC_FUNCTION",
+            "iYCOHHppSW2oNz5JjiJ4L": "ENUM",
+            "DNRbfO-EUKlckIsNOAW6k": "ENUM"
+          }
+        },
+        "vpc": {
+          "ref": "WIDGET#naP4UUEniUtn4qI7I-22D",
+          "widgetShapes": {}
+        },
+        "machineImage": {
+          "ref": "WIDGET#CUXNG3eUC4N0gfao6AoFh",
+          "widgetShapes": {
+            "CUXNG3eUC4N0gfao6AoFh": "STATIC_FUNCTION",
+            "u5lKuJOXnCuvNGXWKrH2t": "LOOSE",
+            "au5i7a7VnRgFQdxTI0IM0": "ENUM"
+          }
+        }
+      }
+    },
+    "_UxDZLU8MoM1lrOzJA1ku": {
+      "id": "",
+      "x": 1031,
+      "y": 165,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.InstanceType",
+      "type": "staticFunction",
+      "method": {
+        "docs": {
+          "remarks": "This class takes a combination of a class and size.\n\nBe aware that not all combinations of class and size are available, and not all\nclasses are available in all regions.",
+          "stability": "stable",
+          "summary": "Instance type for EC2 instances."
+        },
+        "locationInModule": {
+          "filename": "lib/instance-types.ts",
+          "line": 765
+        },
+        "name": "of",
+        "parameters": [
+          {
+            "name": "instanceClass",
+            "type": {
+              "fqn": "@aws-cdk/aws-ec2.InstanceClass"
+            }
+          },
+          {
+            "name": "instanceSize",
+            "type": {
+              "fqn": "@aws-cdk/aws-ec2.InstanceSize"
+            }
+          }
+        ],
+        "returns": {
+          "type": {
+            "fqn": "@aws-cdk/aws-ec2.InstanceType"
+          }
+        },
+        "static": true
+      },
+      "parameters": {
+        "instanceClass": {
+          "ref": "WIDGET#iYCOHHppSW2oNz5JjiJ4L",
+          "widgetShapes": {
+            "iYCOHHppSW2oNz5JjiJ4L": "ENUM"
+          }
+        },
+        "instanceSize": {
+          "ref": "WIDGET#DNRbfO-EUKlckIsNOAW6k",
+          "widgetShapes": {
+            "DNRbfO-EUKlckIsNOAW6k": "ENUM"
+          }
+        }
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 1
+    },
+    "iYCOHHppSW2oNz5JjiJ4L": {
+      "id": "STANDARD3",
+      "x": 1460,
+      "y": 180,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.InstanceClass",
+      "type": "enum",
+      "method": {
+        "docs": {
+          "stability": "stable",
+          "summary": "Standard instances, 3rd generation."
+        },
+        "name": "STANDARD3"
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 2
+    },
+    "DNRbfO-EUKlckIsNOAW6k": {
+      "id": "NANO",
+      "x": 1476,
+      "y": 240,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.InstanceSize",
+      "type": "enum",
+      "method": {
+        "docs": {
+          "stability": "stable",
+          "summary": "Instance size NANO (nano)."
+        },
+        "name": "NANO"
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 2
+    },
+    "naP4UUEniUtn4qI7I-22D": {
+      "id": "",
+      "x": 976.376383069125,
+      "y": 103.21540821733007,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.Vpc",
+      "type": "staticFunction",
+      "method": {
+        "docs": {
+          "remarks": "This function only needs to be used to use VPCs not defined in your CDK\napplication. If you are looking to share a VPC between stacks, you can\npass the `Vpc` object between stacks and use it as normal.\n\nCalling this method will lead to a lookup when the CDK CLI is executed.\nYou can therefore not use any values that will only be available at\nCloudFormation execution time (i.e., Tokens).\n\nThe VPC information will be cached in `cdk.context.json` and the same VPC\nwill be used on future runs. To refresh the lookup, you will have to\nevict the value from the cache using the `cdk context` command. See\nhttps://docs.aws.amazon.com/cdk/latest/guide/context.html for more information.",
+          "stability": "stable",
+          "summary": "Import an existing VPC from by querying the AWS environment this stack is deployed to."
+        },
+        "locationInModule": {
+          "filename": "lib/vpc.ts",
+          "line": 1122
+        },
+        "name": "fromLookup",
+        "parameters": [
+          {
+            "name": "scope",
+            "type": {
+              "fqn": "constructs.Construct"
+            }
+          },
+          {
+            "name": "id",
+            "type": {
+              "primitive": "string"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "fqn": "@aws-cdk/aws-ec2.VpcLookupOptions"
+            }
+          }
+        ],
+        "returns": {
+          "type": {
+            "fqn": "@aws-cdk/aws-ec2.IVpc"
+          }
+        },
+        "static": true
+      },
+      "parameters": {
+        "id": {
+          "value": "primaryVpc",
+          "widgetShapes": {}
+        },
+        "options": {
+          "ref": "WIDGET#9viOTBZmqJVJMlPxKAqGn",
+          "widgetShapes": {
+            "9viOTBZmqJVJMlPxKAqGn": "LOOSE"
+          }
+        }
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      }
+    },
+    "9viOTBZmqJVJMlPxKAqGn": {
+      "id": "MyVpcLookupOptions",
+      "x": 1002,
+      "y": 261,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.VpcLookupOptions",
+      "initializerParameters": {
+        "isDefault": {
+          "value": true,
+          "widgetShapes": {}
+        },
+        "region": {
+          "value": "sdfasdasd",
+          "widgetShapes": {}
+        }
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 1
+    },
+    "CUXNG3eUC4N0gfao6AoFh": {
+      "id": "",
+      "x": 1073,
+      "y": 272,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.MachineImage",
+      "type": "staticFunction",
+      "method": {
+        "docs": {
+          "remarks": "This Machine Image automatically updates to the latest version on every\ndeployment. Be aware this will cause your instances to be replaced when a\nnew version of the image becomes available. Do not store stateful information\non the instance if you are using this image.",
+          "stability": "stable",
+          "summary": "An Amazon Linux image that is automatically kept up-to-date."
+        },
+        "locationInModule": {
+          "filename": "lib/machine-image.ts",
+          "line": 46
+        },
+        "name": "latestAmazonLinux",
+        "parameters": [
+          {
+            "name": "props",
+            "optional": true,
+            "type": {
+              "fqn": "@aws-cdk/aws-ec2.AmazonLinuxImageProps"
+            }
+          }
+        ],
+        "returns": {
+          "type": {
+            "fqn": "@aws-cdk/aws-ec2.IMachineImage"
+          }
+        },
+        "static": true
+      },
+      "parameters": {
+        "props": {
+          "ref": "WIDGET#u5lKuJOXnCuvNGXWKrH2t",
+          "widgetShapes": {
+            "u5lKuJOXnCuvNGXWKrH2t": "LOOSE",
+            "au5i7a7VnRgFQdxTI0IM0": "ENUM"
+          }
+        }
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 1
+    },
+    "u5lKuJOXnCuvNGXWKrH2t": {
+      "id": "MyAmazonLinuxImageProps",
+      "x": 1536,
+      "y": 282,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.AmazonLinuxImageProps",
+      "initializerParameters": {
+        "cpuType": {
+          "ref": "WIDGET#au5i7a7VnRgFQdxTI0IM0",
+          "widgetShapes": {
+            "au5i7a7VnRgFQdxTI0IM0": "ENUM"
+          }
+        }
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 2
+    },
+    "au5i7a7VnRgFQdxTI0IM0": {
+      "id": "X86_64",
+      "x": 1908,
+      "y": 216,
+      "isDragging": false,
+      "forType": "@aws-cdk/aws-ec2.AmazonLinuxCpuType",
+      "type": "enum",
+      "method": {
+        "docs": {
+          "stability": "stable",
+          "summary": "x86_64 CPU type."
+        },
+        "name": "X86_64"
+      },
+      "scope": {
+        "id": "MyStack",
+        "scope": {},
+        "x": 100,
+        "y": 100,
+        "forType": "@aws-cdk/core.Stack",
+        "initializerParameters": {}
+      },
+      "zipped": 3
+    },
+    "F0qnVkilE3W0XF03V-GMk": {
+      "id": "MyEnvironment",
+      "x": 530,
+      "y": 227,
+      "isDragging": false,
+      "forType": "@aws-cdk/core.Environment",
+      "initializerParameters": {
+        "account": {
+          "value": "0123456689",
+          "widgetShapes": {}
+        },
+        "region": {
+          "value": "us-east-1",
+          "widgetShapes": {}
+        }
+      },
+      "scope": {},
+      "zipped": 1
+    }
+  }
+}

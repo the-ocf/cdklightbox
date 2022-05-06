@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`zip More complete example 1`] = `
+Object {
+  "9viOTBZmqJVJMlPxKAqGn": "LOOSE",
+  "naP4UUEniUtn4qI7I-22D": "STATIC_FUNCTION",
+}
+`;

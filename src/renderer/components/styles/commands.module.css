@@ -1,0 +1,9 @@
+.commands {
+  color: #ddd7c2;
+  cursor: pointer;
+  transition: all ease-in 0.1s;
+}
+.commands:hover{
+  transform: scale(1.05);
+  opacity: 1;
+}
