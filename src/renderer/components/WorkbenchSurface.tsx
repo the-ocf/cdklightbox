@@ -58,11 +58,7 @@ export function WorkbenchSurface() {
     return () => window.removeEventListener('resize', checkSize);
   }, []);
 
-  const widgets = useWorkbenchStore((state) =>
-    Object.entries(state.widgets).filter(
-      ([, widgetState]) => !widgetState.zipped
-    )
-  );
+  const tree = useWorkbenchStore((state) => state.cdkApp?.tree);
 
   return (
     <div style={{ flex: 'auto', display: 'flex' }}>
@@ -83,13 +79,7 @@ export function WorkbenchSurface() {
               <WorkbenchBackground />
             </Layer>
             <Layer>
-              {widgets.map(([widgetKey, widgetState]) => (
-                <ConstructWidget
-                  key={widgetKey}
-                  constructKey={widgetKey}
-                  constructWidgetState={widgetState}
-                />
-              ))}
+              <ConstructWidget tree={tree} />
             </Layer>
           </ScaleContext.Provider>
         </StageRefContext.Provider>

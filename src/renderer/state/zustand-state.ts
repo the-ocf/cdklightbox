@@ -3,8 +3,9 @@ import { persist, subscribeWithSelector } from 'zustand/middleware';
 import { Set, WorkbenchState } from './states';
 import { errorState } from './substates/error-state';
 import { workingDirectoryState } from './substates/working-directory-state';
-import { widgetsState } from './substates/widget-state';
+
 import { statusState } from './substates/status-state';
+import { cdkAppState } from './substates/cdk-app-state';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useWorkbenchStore = create<WorkbenchState>(
@@ -15,10 +16,7 @@ export const useWorkbenchStore = create<WorkbenchState>(
         ...errorState(set),
         ...statusState(set),
         ...workingDirectoryState(set),
-        ...widgetsState(set),
-        loadState(newState: Partial<WorkbenchState>) {
-          set(() => newState);
-        },
+        ...cdkAppState(set),
       }),
 
       {

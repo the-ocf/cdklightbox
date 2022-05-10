@@ -1,7 +1,7 @@
 import { ErrorsState } from './substates/error-state';
 import { WorkingDirectoryState } from './substates/working-directory-state';
-import { WidgetsState } from './substates/widget-state';
 import { StatusState } from './substates/status-state';
+import { CdkAppState } from './substates/cdk-app-state';
 
 export interface WidgetState {
   id: string;
@@ -20,7 +20,5 @@ export type Set = (
 export interface WorkbenchState
   extends ErrorsState,
     WorkingDirectoryState,
-    WidgetsState,
-    StatusState {
-  loadState(newState: Partial<WorkbenchState>): void;
-}
+    CdkAppState,
+    StatusState {}

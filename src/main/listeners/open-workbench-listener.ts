@@ -20,11 +20,11 @@ export const openWorkbenchListener = async (event: IpcMainEvent) => {
     return;
   }
   event.reply('status', {
-    message: `Opening project at ${filePath}`,
+    message: `Opening app at ${filePath}`,
   });
-  const workbenchState = await openWorkbench(filePath);
+  const cdkApp = await openWorkbench(filePath);
   event.reply('load-workbench-state', {
     workingDirectory: filePath,
-    ...workbenchState,
+    cdkApp,
   });
 };

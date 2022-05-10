@@ -1,46 +1,26 @@
 import { Group, Rect, Text } from 'react-konva';
-import { createContext, useContext, useState } from 'react';
-import { Html } from 'react-konva-utils/es/html';
+import { createContext, useContext } from 'react';
 import { handlePointerHover, handlePointerLeave } from './utils';
-import { shorten } from '../jsii';
-
-import { useWorkbenchStore } from '../state';
 import {
   CONSTRUCT_COLOR,
   SINGLE_CORNER_RADIUS,
   WIDGET_BACKGROUND_COLOR,
 } from '../colors';
 import { WidgetBackground } from './WidgetBackground';
+import { Tree } from '../state/substates/cdk-app-state';
 
 const ConstructContext = createContext({} as ConstructWidgetProps);
 
 export interface ConstructWidgetState {
   forType: string;
   id: string;
+
+  [k: string]: any;
 }
 
 const Header = () => {
-  const {
-    constructWidgetState: { forType, id },
-    constructKey: key,
-  } = useContext(ConstructContext);
+  const { tree } = useContext(ConstructContext);
 
-  const updateConstructId = useWorkbenchStore(
-    (state) => state.updateConstructId
-  );
-
-  const [isEditing, setIsEditing] = useState(!id);
-  const handleEditing = () => {
-    setIsEditing(!isEditing);
-  };
-
-  const handleUpdate = (event: any) => {
-    // updateId(event.target.id);
-    updateConstructId(key, event.target.value);
-  };
-  const handleBlur = () => {
-    setIsEditing(!id);
-  };
   const groupHeight = 50;
 
   return (
@@ -59,67 +39,30 @@ const Header = () => {
         ]}
       />
       <Group x={10} y={10}>
-        {isEditing ? (
-          <Html groupProps={{ y: -10 }}>
-            <input
-              type="text"
-              onSubmit={handleUpdate}
-              onBlur={handleBlur}
-              value={id}
-              onChange={handleUpdate}
-            />
-          </Html>
-        ) : (
-          <Text
-            text={id}
-            fontStyle="bold"
-            fontSize={14}
-            textDecoration="underline"
-            onMouseEnter={handlePointerHover}
-            onMouseLeave={handlePointerLeave}
-            onClick={handleEditing}
-            onTap={handleEditing}
-            visible={!isEditing}
-            fill="#222222"
-          />
-        )}
+        <Text
+          text={tree.constructInfo.fqn}
+          fontStyle="bold"
+          fontSize={14}
+          textDecoration="underline"
+          onMouseEnter={handlePointerHover}
+          onMouseLeave={handlePointerLeave}
+          fill="#222222"
+        />
       </Group>
-      <Text
-        text={shorten(forType)}
-        x={10}
-        y={30}
-        fontStyle="bold"
-        fontSize={10}
-        fill="#383838"
-      />
     </Group>
   );
 };
 
 export interface ConstructWidgetProps {
-  constructWidgetState: ConstructWidgetState;
-  constructKey: string;
+  tree: Tree;
 }
 
 export const ConstructWidget = (props: ConstructWidgetProps) => {
-  const { constructWidgetState, constructKey } = props;
-
-  const updatePosition = useWorkbenchStore((state) => state.updatePosition);
-
-  const handleDragEnd = (event: any) => {
-    updatePosition(constructKey, { x: event.target.x(), y: event.target.y() });
-  };
-
   const widgetWidth = 400;
 
   return (
     <ConstructContext.Provider value={props}>
-      <Group
-        x={constructWidgetState.x}
-        y={constructWidgetState.y}
-        draggable
-        onDragEnd={handleDragEnd}
-      >
+      <Group draggable>
         <WidgetBackground
           width={widgetWidth}
           height={80}

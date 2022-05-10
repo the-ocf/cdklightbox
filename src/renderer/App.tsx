@@ -20,9 +20,12 @@ function debounce(func: () => void, timeout = 300) {
 
 function App() {
   const workingDirectory = useWorkbenchStore((state) => state.workingDirectory);
-  const loadState = useWorkbenchStore((state) => state.loadState);
+  const setWorkingDirectory = useWorkbenchStore(
+    (state) => state.setWorkingDirectory
+  );
+  const loadState = useWorkbenchStore((state) => state.setCdkApp);
 
-  useEffect(() => {
+  /* useEffect(() => {
     const unsub = useWorkbenchStore.subscribe(
       (state) => state.widgets,
       // @ts-ignore
@@ -37,14 +40,15 @@ function App() {
       }
     );
     return unsub;
-  });
+  }); */
   useEffect(() => {
     const listener = (
       _event: IpcRendererEvent,
       loadedState: WorkbenchState
     ) => {
       console.log('loaded state: ', loadedState);
-      loadState(loadedState);
+      loadState(loadedState.cdkApp);
+      setWorkingDirectory(loadedState.workingDirectory);
     };
     const handler = ipcRenderer.on('load-workbench-state', listener);
     return () => handler.removeListener('load-workbench-state', listener);
