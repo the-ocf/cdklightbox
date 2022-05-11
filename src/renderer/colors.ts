@@ -8,5 +8,16 @@ export const ENUM_COLOR = '#5a87cc';
 export const REQUIRED_COLOR = '#be7c7c';
 export const OBJECT_PICKER_BUTTON_COLOR = '#709eb3';
 
+export const WIDGET_COLORS = [
+  '#723700',
+  '#725d00',
+  '#447200',
+  '#00724e',
+  '#005f72',
+  '#003372',
+  '#330072',
+  '#6c0072',
+];
+
 export const DOUBLE_CORNER_RADIUS = [5, 0, 5, 0];
 export const SINGLE_CORNER_RADIUS = [5, 0, 0, 0];

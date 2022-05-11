@@ -5,6 +5,7 @@ import {
   CONSTRUCT_COLOR,
   SINGLE_CORNER_RADIUS,
   WIDGET_BACKGROUND_COLOR,
+  WIDGET_COLORS,
 } from '../colors';
 import { WidgetBackground } from './WidgetBackground';
 import { Child } from '../state/substates/cdk-app-state';
@@ -23,7 +24,7 @@ export interface ConstructWidgetState {
 const HEADER_HEIGHT = 50;
 
 const Header = () => {
-  const { root } = useContext(ConstructContext);
+  const { root, level } = useContext(ConstructContext);
 
   const groupHeight = HEADER_HEIGHT;
 
@@ -37,7 +38,7 @@ const Header = () => {
         fillLinearGradientEndPoint={{ x: 400, y: 25 }}
         fillLinearGradientColorStops={[
           0,
-          CONSTRUCT_COLOR,
+          WIDGET_COLORS[level],
           1,
           WIDGET_BACKGROUND_COLOR,
         ]}
@@ -48,8 +49,6 @@ const Header = () => {
           fontStyle="bold"
           fontSize={14}
           textDecoration="underline"
-          onMouseEnter={handlePointerHover}
-          onMouseLeave={handlePointerLeave}
           fill="#222222"
         />
         <Text
@@ -57,8 +56,6 @@ const Header = () => {
           text={shorten(root.constructInfo.fqn)}
           fontStyle="bold"
           fontSize={12}
-          onMouseEnter={handlePointerHover}
-          onMouseLeave={handlePointerLeave}
           fill="#222222"
         />
       </Group>
