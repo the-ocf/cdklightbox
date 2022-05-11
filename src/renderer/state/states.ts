@@ -2,6 +2,7 @@ import { ErrorsState } from './substates/error-state';
 import { WorkingDirectoryState } from './substates/working-directory-state';
 import { StatusState } from './substates/status-state';
 import { CdkAppState } from './substates/cdk-app-state';
+import { LevelFilterState } from './substates/level-filter-state';
 
 export interface WidgetState {
   id: string;
@@ -21,4 +22,5 @@ export interface WorkbenchState
   extends ErrorsState,
     WorkingDirectoryState,
     CdkAppState,
+    LevelFilterState,
     StatusState {}

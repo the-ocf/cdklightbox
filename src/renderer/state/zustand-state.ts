@@ -6,6 +6,7 @@ import { workingDirectoryState } from './substates/working-directory-state';
 
 import { statusState } from './substates/status-state';
 import { cdkAppState } from './substates/cdk-app-state';
+import { levelFilterState } from './substates/level-filter-state';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useWorkbenchStore = create<WorkbenchState>(
@@ -17,6 +18,7 @@ export const useWorkbenchStore = create<WorkbenchState>(
         ...statusState(set),
         ...workingDirectoryState(set),
         ...cdkAppState(set),
+        ...levelFilterState(set),
       }),
 
       {

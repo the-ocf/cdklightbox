@@ -1,20 +1,19 @@
 import { Layer, Stage } from 'react-konva';
-import { createContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useWorkbenchStore } from '../state';
 
 import { WorkbenchBackground } from './WorkbenchBackground';
 import { ConstructWidget } from './ConstructWidget';
-
-export const StageRefContext = createContext({} as any);
-export const ScaleContext = createContext({} as any);
+import { LevelFilter } from './LevelFilter';
+import { LevelFilterContext, ScaleContext, StageRefContext } from './Contexts';
 
 export function WorkbenchSurface() {
-  const [app] = useState({});
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
   const [scale, setScale] = useState({ stageScale: 1, stageX: 0, stageY: 0 });
+  const [levelFilter, setLevelFilter] = useState(3);
   const stageRef: any = useRef();
 
   const handleWheel = (e: any) => {
@@ -79,11 +78,13 @@ export function WorkbenchSurface() {
               <WorkbenchBackground />
             </Layer>
             <Layer>
-              <ConstructWidget tree={tree} />
+              <ConstructWidget root={tree} level={1} x={0} y={0} />
             </Layer>
           </ScaleContext.Provider>
         </StageRefContext.Provider>
       </Stage>
+
+      <LevelFilter />
     </div>
   );
 }

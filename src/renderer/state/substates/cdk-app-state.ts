@@ -19,16 +19,21 @@ export interface CdkApp {
   flattenedChildren: Child[];
 }
 
+export type Children = Record<string, Child>;
+
 export interface Tree {
   id: string;
   path: string;
-  children: Record<string, Child>;
+  children: Children;
   constructInfo: ConstructInfo;
 }
 
-function flattenChildren(children: Record<string, Child>): Child[] {
+export function flattenChildren(children: Children): Child[] {
   const allChildren: Child[] = [];
-  const getChildren = (children: Record<string, Child>) => {
+  const getChildren = (children: Children) => {
+    if (!children) {
+      return;
+    }
     Object.values(children)
       .filter((x: Child) => x.id !== 'Tree')
       .forEach((child: Child) => {
