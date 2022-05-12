@@ -7,18 +7,22 @@ import { workingDirectoryState } from './substates/working-directory-state';
 import { statusState } from './substates/status-state';
 import { cdkAppState } from './substates/cdk-app-state';
 import { levelFilterState } from './substates/level-filter-state';
+import { widgetsViewState } from './substates/widget-view-state';
+import { workbenchViewState } from './substates/workbench-view-state';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useWorkbenchStore = create<WorkbenchState>(
   // @ts-ignore
   subscribeWithSelector(
     persist(
-      (set: Set) => ({
+      (set: Set, get: () => WorkbenchState) => ({
         ...errorState(set),
         ...statusState(set),
         ...workingDirectoryState(set),
         ...cdkAppState(set),
         ...levelFilterState(set),
+        ...widgetsViewState(set, get),
+        ...workbenchViewState(set),
       }),
 
       {

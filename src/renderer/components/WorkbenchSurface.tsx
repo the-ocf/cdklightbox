@@ -1,19 +1,28 @@
 import { Layer, Stage } from 'react-konva';
 import { useEffect, useRef, useState } from 'react';
+import Konva from 'konva';
 import { useWorkbenchStore } from '../state';
 
 import { WorkbenchBackground } from './WorkbenchBackground';
 import { ConstructWidget } from './ConstructWidget';
 import { LevelFilter } from './LevelFilter';
-import { LevelFilterContext, ScaleContext, StageRefContext } from './Contexts';
+import { ScaleContext, StageRefContext } from './Contexts';
+import KonvaEventObject = Konva.KonvaEventObject;
 
 export function WorkbenchSurface() {
   const [size, setSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   });
-  const [scale, setScale] = useState({ stageScale: 1, stageX: 0, stageY: 0 });
+
   const [levelFilter, setLevelFilter] = useState(3);
+  const setPosition = useWorkbenchStore((state) => state.setWorkbenchPosition);
+  const setScale = useWorkbenchStore((state) => state.setScale);
+
+  const position = useWorkbenchStore((state) => state.workbenchPosition);
+  const scale = useWorkbenchStore((state) => state.scale);
+  const tree = useWorkbenchStore((state) => state.cdkApp?.tree);
+
   const stageRef: any = useRef();
 
   const handleWheel = (e: any) => {
@@ -41,12 +50,10 @@ export function WorkbenchSurface() {
     if (newScale < 0.25) {
       newScale = 0.25;
     }
-    setScale({
-      stageScale: newScale,
-      stageX:
-        -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
-      stageY:
-        -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
+    setScale(newScale);
+    setPosition({
+      x: -(mousePointTo.x - stage.getPointerPosition().x / newScale) * newScale,
+      y: -(mousePointTo.y - stage.getPointerPosition().y / newScale) * newScale,
     });
   };
   useEffect(() => {
@@ -57,7 +64,9 @@ export function WorkbenchSurface() {
     return () => window.removeEventListener('resize', checkSize);
   }, []);
 
-  const tree = useWorkbenchStore((state) => state.cdkApp?.tree);
+  const handleOnDragEnd = (event: KonvaEventObject<DragEvent>) => {
+    setPosition({ x: event.target.x(), y: event.target.y() });
+  };
 
   return (
     <div style={{ flex: 'auto', display: 'flex' }}>
@@ -65,11 +74,12 @@ export function WorkbenchSurface() {
         width={size.width}
         height={size.height}
         onWheel={handleWheel}
-        scaleX={scale.stageScale}
-        scaleY={scale.stageScale}
-        x={scale.stageX}
-        y={scale.stageY}
+        scaleX={scale}
+        scaleY={scale}
+        x={position.x || 0}
+        y={position.y || 0}
         draggable
+        onDragEnd={handleOnDragEnd}
         ref={stageRef}
       >
         <StageRefContext.Provider value={stageRef}>
@@ -78,7 +88,7 @@ export function WorkbenchSurface() {
               <WorkbenchBackground />
             </Layer>
             <Layer>
-              <ConstructWidget root={tree} level={1} x={0} y={0} />
+              <ConstructWidget root={tree} level={1} index={0} />
             </Layer>
           </ScaleContext.Provider>
         </StageRefContext.Provider>

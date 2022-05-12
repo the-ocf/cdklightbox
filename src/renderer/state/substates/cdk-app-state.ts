@@ -2,6 +2,7 @@ import { Set } from '../states';
 
 export interface Child {
   id: string;
+  path: string;
   children?: Record<string, Child>;
 }
 
@@ -30,11 +31,11 @@ export interface Tree {
 
 export function flattenChildren(children: Children): Child[] {
   const allChildren: Child[] = [];
-  const getChildren = (children: Children) => {
-    if (!children) {
+  const getChildren = (childrens: Children) => {
+    if (!childrens) {
       return;
     }
-    Object.values(children)
+    Object.values(childrens)
       .filter((x: Child) => x.id !== 'Tree')
       .forEach((child: Child) => {
         allChildren.push(child);

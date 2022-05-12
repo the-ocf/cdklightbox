@@ -1,6 +1,6 @@
 import { Group, Rect, Text } from 'react-konva';
 import { createContext, useContext } from 'react';
-import { handlePointerHover, handlePointerLeave } from './utils';
+import Konva from 'konva';
 import {
   CONSTRUCT_COLOR,
   SINGLE_CORNER_RADIUS,
@@ -11,6 +11,8 @@ import { WidgetBackground } from './WidgetBackground';
 import { Child } from '../state/substates/cdk-app-state';
 import { shorten } from '../jsii';
 import { useWorkbenchStore } from '../state';
+import { WidgetViewState } from '../state/substates/widget-view-state';
+import KonvaEventObject = Konva.KonvaEventObject;
 
 const ConstructContext = createContext({} as ConstructWidgetProps);
 
@@ -65,36 +67,43 @@ const Header = () => {
 
 export interface ConstructWidgetProps {
   root: Child;
-  x: number;
-  y: number;
   level: number;
+  index: number;
 }
 
-function getPosition(index: number): { x: number; y: number } {
+function getPosition(index: number): WidgetViewState {
   const offsetX = 0;
   const offsetY = 0;
   const angle = index * 30;
   const radius = 500;
   return {
-    x: offsetX + Math.cos(angle * (Math.PI / 180)) * radius,
-    y: offsetY + -1 * Math.sin(angle * (Math.PI / 180)) * radius,
+    position: {
+      x: offsetX + Math.cos(angle * (Math.PI / 180)) * radius,
+      y: offsetY + -1 * Math.sin(angle * (Math.PI / 180)) * radius,
+    },
+    isVisible: true,
   };
 }
 
-function getPositionX(index: number) {
-  return getPosition(index).x;
-}
-
-function getPositionY(index: number) {
-  return getPosition(index).y;
-}
-
 export const ConstructWidget = (props: ConstructWidgetProps) => {
-  const { root, x, y, level } = props;
+  const { root, index, level } = props;
+
   const levelFilter = useWorkbenchStore((x) => x.levelFilter);
-  return (
+  const loadPosition = useWorkbenchStore((x) => x.loadPosition);
+  const setWidgetViewState = useWorkbenchStore((x) => x.setWidgetViewState);
+  const { position, isVisible } = loadPosition(root.path) ?? getPosition(index);
+  const { x, y } = position;
+  const handleOnDragEnd = (event: KonvaEventObject<DragEvent>) => {
+    console.log('handling onDragEnd', event);
+    event.cancelBubble = true;
+    setWidgetViewState(root.path, {
+      isVisible: true,
+      position: { x: event.target.x(), y: event.target.y() },
+    });
+  };
+  return isVisible ? (
     <ConstructContext.Provider value={props}>
-      <Group draggable x={x} y={y}>
+      <Group draggable x={x} y={y} onDragEnd={handleOnDragEnd}>
         <WidgetBackground
           width={200}
           height={200 + HEADER_HEIGHT}
@@ -105,17 +114,17 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
           ? Object.values(root.children)
               .filter((child) => child.id !== 'Tree')
               .filter((child) => child.id !== 'CDKMetadata')
-              .map((child, index) => (
+              .map((child, i) => (
                 <ConstructWidget
                   key={child.id}
-                  x={getPositionX(index)}
-                  y={getPositionY(index)}
                   root={child}
+                  index={i}
                   level={level + 1}
                 />
               ))
           : null}
+        <Text x={10} y={100} text={JSON.stringify(position)} fill="white" />
       </Group>
     </ConstructContext.Provider>
-  );
+  ) : null;
 };
