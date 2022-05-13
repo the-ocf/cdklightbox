@@ -65,6 +65,7 @@ export function WorkbenchSurface() {
   }, []);
 
   const handleOnDragEnd = (event: KonvaEventObject<DragEvent>) => {
+    event.cancelBubble = true;
     setPosition({ x: event.target.x(), y: event.target.y() });
   };
 
@@ -79,7 +80,7 @@ export function WorkbenchSurface() {
         x={position.x || 0}
         y={position.y || 0}
         draggable
-        onDragEnd={handleOnDragEnd}
+        onDragMove={handleOnDragEnd}
         ref={stageRef}
       >
         <StageRefContext.Provider value={stageRef}>

@@ -1,10 +1,11 @@
-import { Circle, Group, Rect, Text } from 'react-konva';
+import { Circle, Group, Line, Rect, Text } from 'react-konva';
 import { createContext, useContext } from 'react';
 import Konva from 'konva';
 import {
   CONSTRUCT_COLOR,
   HIDE_BUTTON,
   HIDE_BUTTON_TEXT,
+  LINE_COLOR,
   SINGLE_CORNER_RADIUS,
   WIDGET_BACKGROUND_COLOR,
   WIDGET_COLORS,
@@ -87,6 +88,8 @@ export interface ConstructWidgetProps {
   root: Child;
   level: number;
   index: number;
+  scopeX?: number;
+  scopeY?: number;
 }
 
 function getPosition(index: number): WidgetViewState {
@@ -104,7 +107,7 @@ function getPosition(index: number): WidgetViewState {
 }
 
 export const ConstructWidget = (props: ConstructWidgetProps) => {
-  const { root, index, level } = props;
+  const { root, index, level, scopeX, scopeY } = props;
 
   const levelFilter = useWorkbenchStore((x) => x.levelFilter);
   const loadPosition = useWorkbenchStore((x) => x.loadPosition);
@@ -120,13 +123,26 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
   };
   return isVisible ? (
     <ConstructContext.Provider value={props}>
-      <Group draggable x={x} y={y} onDragEnd={handleOnDragEnd}>
+      <Group draggable x={x} y={y} onDragMove={handleOnDragEnd}>
+        {scopeX && scopeY ? (
+          <Line
+            stroke={LINE_COLOR}
+            width={3}
+            points={[
+              -x + 200,
+              -y + 100 + HEADER_HEIGHT / 2,
+              100,
+              100 + HEADER_HEIGHT / 2,
+            ]}
+          />
+        ) : null}
         <WidgetBackground
           width={200}
           height={200 + HEADER_HEIGHT}
           widgetColor={CONSTRUCT_COLOR}
         />
         <Header />
+
         {root.children && level <= levelFilter
           ? Object.values(root.children)
               .filter((child) => child.id !== 'Tree')
@@ -137,10 +153,11 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
                   root={child}
                   index={i}
                   level={level + 1}
+                  scopeX={x}
+                  scopeY={y}
                 />
               ))
           : null}
-        <Text x={10} y={100} text={JSON.stringify(position)} fill="white" />
       </Group>
     </ConstructContext.Provider>
   ) : null;

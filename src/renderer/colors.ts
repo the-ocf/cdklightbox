@@ -19,6 +19,7 @@ export const WIDGET_COLORS = [
   '#330072',
   '#6c0072',
 ];
+export const LINE_COLOR = 'white';
 
 export const DOUBLE_CORNER_RADIUS = [5, 0, 5, 0];
 export const SINGLE_CORNER_RADIUS = [5, 0, 0, 0];
