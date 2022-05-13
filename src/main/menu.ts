@@ -1,9 +1,9 @@
 import {
   app,
-  Menu,
-  shell,
   BrowserWindow,
+  Menu,
   MenuItemConstructorOptions,
+  shell,
 } from 'electron';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
@@ -54,7 +54,7 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'Electron',
+      label: 'CDK Lcars',
       submenu: [
         {
           label: 'About ElectronReact',
@@ -206,6 +206,27 @@ export default class MenuBuilder {
             accelerator: 'Ctrl+W',
             click: () => {
               this.mainWindow.close();
+            },
+          },
+        ],
+      },
+      {
+        label: 'Edit',
+        submenu: [
+          {
+            label: 'Undo',
+            accelerator: 'Control+Z',
+            selector: 'undo:',
+            click() {
+              BrowserWindow.getFocusedWindow()!.webContents.send('undo');
+            },
+          },
+          {
+            label: 'Redo',
+            accelerator: 'Shift+Control+Z',
+            selector: 'redo:',
+            click() {
+              BrowserWindow.getFocusedWindow()!.webContents.send('redo');
             },
           },
         ],

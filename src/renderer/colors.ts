@@ -7,10 +7,11 @@ export const LOOSE_OBJECT_COLOR = '#b7a5d5';
 export const ENUM_COLOR = '#5a87cc';
 export const REQUIRED_COLOR = '#be7c7c';
 export const OBJECT_PICKER_BUTTON_COLOR = '#709eb3';
-
+export const HIDE_BUTTON = '#747474';
+export const HIDE_BUTTON_TEXT = '#cccccc';
 export const WIDGET_COLORS = [
-  '#723700',
-  '#725d00',
+  '#a94600',
+  '#a99200',
   '#447200',
   '#00724e',
   '#005f72',

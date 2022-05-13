@@ -23,7 +23,10 @@ function App() {
   const setWorkingDirectory = useWorkbenchStore(
     (state) => state.setWorkingDirectory
   );
+  const workbenchState = useWorkbenchStore((state) => state);
   const loadState = useWorkbenchStore((state) => state.setCdkApp);
+  const undo = useWorkbenchStore((state) => state.undo);
+  const redo = useWorkbenchStore((state) => state.redo);
 
   /* useEffect(() => {
     const unsub = useWorkbenchStore.subscribe(
@@ -41,6 +44,25 @@ function App() {
     );
     return unsub;
   }); */
+
+  useEffect(() => {
+    const listener = (event) => {
+      if (redo) redo();
+    };
+
+    const handler = ipcRenderer.on('redo', listener);
+    return () => handler.removeListener('redo', listener);
+  }, [redo, workbenchState]);
+
+  useEffect(() => {
+    const listener = (event) => {
+      if (undo) undo();
+    };
+
+    const handler = ipcRenderer.on('undo', listener);
+    return () => handler.removeListener('undo', listener);
+  }, [undo, workbenchState]);
+
   useEffect(() => {
     const listener = (
       _event: IpcRendererEvent,

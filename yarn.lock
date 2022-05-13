@@ -6059,7 +6059,7 @@ lodash.escaperegexp@^4.1.2:
   resolved "https://registry.npmjs.org/lodash.escaperegexp/-/lodash.escaperegexp-4.1.2.tgz"
   integrity sha1-ZHYsSGGAglGKw99Mz11YhtriA0c=
 
-lodash.isequal@^4.5.0:
+lodash.isequal@4.5.0, lodash.isequal@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/lodash.isequal/-/lodash.isequal-4.5.0.tgz"
   integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
@@ -9349,6 +9349,13 @@ yocto-queue@^0.1.0:
   version "0.1.0"
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
+
+zundo@^1.5.9:
+  version "1.5.9"
+  resolved "https://registry.yarnpkg.com/zundo/-/zundo-1.5.9.tgz#9fdb02ddc3ebd1fb5724141aab04dcf8f628083d"
+  integrity sha512-uC9sS41UE811YK+cyd3hURLPxG3AwkIobwobbMLc5LfFUVZljFdDPvhRBJjmvQ4DI9yBVGaK2fcXmLT2C5qAlw==
+  dependencies:
+    lodash.isequal "4.5.0"
 
 zustand@^4.0.0-rc.0:
   version "4.0.0-rc.0"

@@ -1,3 +1,4 @@
+import { UndoState } from 'zundo';
 import { ErrorsState } from './substates/error-state';
 import { WorkingDirectoryState } from './substates/working-directory-state';
 import { StatusState } from './substates/status-state';
@@ -27,4 +28,5 @@ export interface WorkbenchState
     LevelFilterState,
     WidgetsViewState,
     WorkbenchViewState,
-    StatusState {}
+    StatusState,
+    UndoState {}

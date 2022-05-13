@@ -1,5 +1,6 @@
 import create from 'zustand';
 import { persist, subscribeWithSelector } from 'zustand/middleware';
+import { undoMiddleware } from 'zundo';
 import { Set, WorkbenchState } from './states';
 import { errorState } from './substates/error-state';
 import { workingDirectoryState } from './substates/working-directory-state';
@@ -15,18 +16,21 @@ export const useWorkbenchStore = create<WorkbenchState>(
   // @ts-ignore
   subscribeWithSelector(
     persist(
-      (set: Set, get: () => WorkbenchState) => ({
-        ...errorState(set),
-        ...statusState(set),
-        ...workingDirectoryState(set),
-        ...cdkAppState(set),
-        ...levelFilterState(set),
-        ...widgetsViewState(set, get),
-        ...workbenchViewState(set),
-      }),
-
+      undoMiddleware(
+        // @ts-ignore
+        (set: Set, get: () => WorkbenchState) => ({
+          ...errorState(set),
+          ...statusState(set),
+          ...workingDirectoryState(set),
+          ...cdkAppState(set),
+          ...levelFilterState(set),
+          ...widgetsViewState(set, get),
+          ...workbenchViewState(set),
+        }),
+        { exclude: ['workbenchPosition', 'scale'] }
+      ),
       {
-        name: 'localStorage',
+        name: 'workbenchState',
         getStorage: () => localStorage,
       }
     )

@@ -1,8 +1,10 @@
-import { Group, Rect, Text } from 'react-konva';
+import { Circle, Group, Rect, Text } from 'react-konva';
 import { createContext, useContext } from 'react';
 import Konva from 'konva';
 import {
   CONSTRUCT_COLOR,
+  HIDE_BUTTON,
+  HIDE_BUTTON_TEXT,
   SINGLE_CORNER_RADIUS,
   WIDGET_BACKGROUND_COLOR,
   WIDGET_COLORS,
@@ -27,9 +29,13 @@ const HEADER_HEIGHT = 50;
 
 const Header = () => {
   const { root, level } = useContext(ConstructContext);
-
+  const setWidgetViewState = useWorkbenchStore(
+    (state) => state.setWidgetViewState
+  );
   const groupHeight = HEADER_HEIGHT;
-
+  const hideWidget = () => {
+    setWidgetViewState(root.path, { isVisible: false });
+  };
   return (
     <Group height={groupHeight} x={0} y={0}>
       <Rect
@@ -45,6 +51,18 @@ const Header = () => {
           WIDGET_BACKGROUND_COLOR,
         ]}
       />
+      <Group
+        x={180}
+        y={25}
+        height={50}
+        width={20}
+        onClick={hideWidget}
+        onTap={hideWidget}
+      >
+        <Circle radius={15} fill={HIDE_BUTTON} />
+        <Text text="x" y={-5} x={-3} fill={HIDE_BUTTON_TEXT} />
+      </Group>
+
       <Group x={10} y={10}>
         <Text
           text={shorten(root.id)}
@@ -94,7 +112,6 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
   const { position, isVisible } = loadPosition(root.path) ?? getPosition(index);
   const { x, y } = position;
   const handleOnDragEnd = (event: KonvaEventObject<DragEvent>) => {
-    console.log('handling onDragEnd', event);
     event.cancelBubble = true;
     setWidgetViewState(root.path, {
       isVisible: true,

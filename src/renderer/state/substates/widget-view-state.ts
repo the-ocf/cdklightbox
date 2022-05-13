@@ -9,7 +9,10 @@ export interface WidgetViewState {
 export interface WidgetsViewState {
   widgets: Record<string, WidgetViewState>;
   loadPosition(path: string): WidgetViewState;
-  setWidgetViewState(id: string, widgetViewState: WidgetViewState): void;
+  setWidgetViewState(
+    id: string,
+    widgetViewState: Partial<WidgetViewState>
+  ): void;
 }
 
 export const widgetsViewState = (
@@ -24,7 +27,10 @@ export const widgetsViewState = (
     setWidgetViewState(id: string, widgetViewState: WidgetViewState): void {
       set(
         produce(function (state: WorkbenchState) {
-          state.widgets[id || 'root'] = widgetViewState;
+          state.widgets[id || 'root'] = {
+            ...(get().widgets[id || 'root'] || {}),
+            ...widgetViewState,
+          };
         })
       );
     },
