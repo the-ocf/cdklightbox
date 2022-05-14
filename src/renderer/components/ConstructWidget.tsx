@@ -121,6 +121,30 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
       position: { x: event.target.x(), y: event.target.y() },
     });
   };
+
+  const calculateCenter = () => {
+    return [100, 100 + HEADER_HEIGHT / 2];
+  };
+
+  const calculateLineStart = () => {
+    // if we're to the right of the parent
+    if (x > 100) {
+      const startX = -x + 200;
+      const startY = -y + 100 + HEADER_HEIGHT / 2;
+      return [startX, startY];
+    }
+    // we're to the left of the parent
+    if (x < -200) {
+      return [-x, -y + 100 + HEADER_HEIGHT / 2];
+    }
+    // if we're below the parent
+    if (y > 0) {
+      return [-x + 100, -y + 200 + HEADER_HEIGHT];
+    }
+    // otherwise go out the top
+    return [-x + 100, -y];
+  };
+  const scopeInfo = `scopeX: ${scopeX}, scopeY: ${scopeY}, x: ${x}, y: ${y}`;
   return isVisible ? (
     <ConstructContext.Provider value={props}>
       <Group draggable x={x} y={y} onDragMove={handleOnDragEnd}>
@@ -128,12 +152,7 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
           <Line
             stroke={LINE_COLOR}
             width={3}
-            points={[
-              -x + 200,
-              -y + 100 + HEADER_HEIGHT / 2,
-              100,
-              100 + HEADER_HEIGHT / 2,
-            ]}
+            points={[...calculateLineStart(), ...calculateCenter()]}
           />
         ) : null}
         <WidgetBackground
@@ -142,7 +161,7 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
           widgetColor={CONSTRUCT_COLOR}
         />
         <Header />
-
+        <Text x={20} y={100} text={scopeInfo} fill="white" />
         {root.children && level <= levelFilter
           ? Object.values(root.children)
               .filter((child) => child.id !== 'Tree')
