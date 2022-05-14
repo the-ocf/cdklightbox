@@ -53,7 +53,7 @@ export const getInitializerProps = (forType: any) => {
   return forType.initializer.parameters;
 };
 
-const shortenRegex = /\/([a-z0-9-]*.\w*)/;
+const shortenRegex = /\.(\w*$)/;
 
 export function shorten(fqn: string) {
   const results = shortenRegex.exec(fqn);

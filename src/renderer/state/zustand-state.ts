@@ -10,6 +10,7 @@ import { cdkAppState } from './substates/cdk-app-state';
 import { levelFilterState } from './substates/level-filter-state';
 import { widgetsViewState } from './substates/widget-view-state';
 import { workbenchViewState } from './substates/workbench-view-state';
+import { showHiddenState } from './substates/show-hidden-state';
 
 // eslint-disable-next-line import/prefer-default-export
 export const useWorkbenchStore = create<WorkbenchState>(
@@ -26,8 +27,9 @@ export const useWorkbenchStore = create<WorkbenchState>(
           ...levelFilterState(set),
           ...widgetsViewState(set, get),
           ...workbenchViewState(set),
+          ...showHiddenState(set),
         }),
-        { exclude: ['workbenchPosition', 'scale'] }
+        { exclude: ['workbenchPosition', 'scale'], coolOffDurationMs: 1000 }
       ),
       {
         name: 'workbenchState',

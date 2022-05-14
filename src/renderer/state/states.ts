@@ -6,6 +6,7 @@ import { CdkAppState } from './substates/cdk-app-state';
 import { LevelFilterState } from './substates/level-filter-state';
 import { WidgetsViewState } from './substates/widget-view-state';
 import { WorkbenchViewState } from './substates/workbench-view-state';
+import { ShowHiddenState } from './substates/show-hidden-state';
 
 export interface WidgetState {
   id: string;
@@ -29,4 +30,5 @@ export interface WorkbenchState
     WidgetsViewState,
     WorkbenchViewState,
     StatusState,
+    ShowHiddenState,
     UndoState {}

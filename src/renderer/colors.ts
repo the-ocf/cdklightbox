@@ -20,6 +20,9 @@ export const WIDGET_COLORS = [
   '#6c0072',
 ];
 export const LINE_COLOR = 'white';
+export const HIDE_BUTTON_STROKE_COLOR = '#333333';
+export const HIDE_BUTTON_IS_VISIBLE_STROKE_COLOR = '#652727';
+export const SHOW_BUTTON_IS_VISIBLE_STROKE_COLOR = '#2e6527';
 
 export const DOUBLE_CORNER_RADIUS = [5, 0, 5, 0];
 export const SINGLE_CORNER_RADIUS = [5, 0, 0, 0];

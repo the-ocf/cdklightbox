@@ -8,7 +8,9 @@ export interface WidgetViewState {
 
 export interface WidgetsViewState {
   widgets: Record<string, WidgetViewState>;
+
   loadPosition(path: string): WidgetViewState;
+
   setWidgetViewState(
     id: string,
     widgetViewState: Partial<WidgetViewState>
@@ -28,7 +30,7 @@ export const widgetsViewState = (
       set(
         produce(function (state: WorkbenchState) {
           state.widgets[id || 'root'] = {
-            ...(get().widgets[id || 'root'] || {}),
+            ...(get().widgets[id || 'root'] || { isVisible: true }),
             ...widgetViewState,
           };
         })

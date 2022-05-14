@@ -15,10 +15,8 @@ export function WorkbenchSurface() {
     height: window.innerHeight,
   });
 
-  const [levelFilter, setLevelFilter] = useState(3);
   const setPosition = useWorkbenchStore((state) => state.setWorkbenchPosition);
   const setScale = useWorkbenchStore((state) => state.setScale);
-
   const position = useWorkbenchStore((state) => state.workbenchPosition);
   const scale = useWorkbenchStore((state) => state.scale);
   const tree = useWorkbenchStore((state) => state.cdkApp?.tree);

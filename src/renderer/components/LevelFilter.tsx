@@ -1,22 +1,43 @@
+import { AiOutlineArrowDown, AiOutlineArrowUp } from 'react-icons/ai';
 import { useWorkbenchStore } from '../state';
 
 export function LevelFilter() {
   const levelFilter = useWorkbenchStore((x) => x.levelFilter);
   const setLevelFilter = useWorkbenchStore((x) => x.setLevelFilter);
-
-  const handleOnDownClick = () => setLevelFilter(Math.max(1, levelFilter - 1));
+  const showHidden = useWorkbenchStore((x) => x.showHidden);
+  const setShowHidden = useWorkbenchStore((x) => x.setShowHidden);
   return (
     <div
-      className=""
-      style={{ position: 'absolute', right: 0, bottom: '10px' }}
+      className="bg-white flex flex-row items-center rounded-md"
+      style={{ position: 'absolute', right: '10px', bottom: '10px' }}
     >
-      <button type="button" onClick={() => setLevelFilter(levelFilter + 1)}>
-        UP
-      </button>
-      <span>{levelFilter}</span>
-      <button type="button" onClick={handleOnDownClick}>
-        DOWN
-      </button>
+      <span className="flex-grow px-2">Show Hidden:</span>
+      <input
+        className="mr-2"
+        type="checkbox"
+        onChange={(event) => {
+          setShowHidden(event.target.checked);
+        }}
+        checked={showHidden}
+      />
+      <div className="mx-2 flex flex-row items-center">
+        <span>Level Filter:</span>
+        <span className="mx-2">{levelFilter}</span>
+        <button
+          className="mx-2"
+          type="button"
+          onClick={() => setLevelFilter(levelFilter + 1)}
+        >
+          <AiOutlineArrowUp />
+        </button>
+        <button
+          className="mx-2"
+          type="button"
+          onClick={() => setLevelFilter(levelFilter - 1)}
+        >
+          <AiOutlineArrowDown />
+        </button>
+      </div>
     </div>
   );
 }

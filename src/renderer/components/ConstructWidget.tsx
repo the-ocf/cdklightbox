@@ -1,11 +1,12 @@
-import { Circle, Group, Line, Rect, Text } from 'react-konva';
+import { Group, Image, Line, Rect, Text } from 'react-konva';
 import { createContext, useContext } from 'react';
 import Konva from 'konva';
+import { useImage } from 'react-konva-utils';
 import {
   CONSTRUCT_COLOR,
-  HIDE_BUTTON,
-  HIDE_BUTTON_TEXT,
+  HIDE_BUTTON_IS_VISIBLE_STROKE_COLOR,
   LINE_COLOR,
+  SHOW_BUTTON_IS_VISIBLE_STROKE_COLOR,
   SINGLE_CORNER_RADIUS,
   WIDGET_BACKGROUND_COLOR,
   WIDGET_COLORS,
@@ -14,7 +15,12 @@ import { WidgetBackground } from './WidgetBackground';
 import { Child } from '../state/substates/cdk-app-state';
 import { shorten } from '../jsii';
 import { useWorkbenchStore } from '../state';
-import { WidgetViewState } from '../state/substates/widget-view-state';
+import {
+  widgetsViewState,
+  WidgetViewState,
+} from '../state/substates/widget-view-state';
+import hideImage from './assets/hide-svgrepo-com.svg';
+import showImage from './assets/show-svgrepo-com.svg';
 import KonvaEventObject = Konva.KonvaEventObject;
 
 const ConstructContext = createContext({} as ConstructWidgetProps);
@@ -33,10 +39,33 @@ const Header = () => {
   const setWidgetViewState = useWorkbenchStore(
     (state) => state.setWidgetViewState
   );
+  const widgetViewState = useWorkbenchStore(
+    (state) => state.widgets[root.path || 'root']
+  ) ?? { isVisible: true };
+  const [hideIcon] = useImage(hideImage);
+  const [showIcon] = useImage(showImage);
+
   const groupHeight = HEADER_HEIGHT;
-  const hideWidget = () => {
-    setWidgetViewState(root.path, { isVisible: false });
+  const toggleWidget = (event: KonvaEventObject<MouseEvent>) => {
+    console.debug('Toggling visibility');
+    event.cancelBubble = true;
+
+    setWidgetViewState(root.path, {
+      position: widgetViewState.position,
+      isVisible: !widgetViewState.isVisible,
+    });
   };
+  const handleCursor = (e: KonvaEventObject<MouseEvent>) => {
+    const stage = e.target.getStage();
+    if (stage) {
+      if (e.type === 'mouseenter') {
+        stage.container().style.cursor = 'pointer';
+      } else {
+        stage.container().style.cursor = 'default';
+      }
+    }
+  };
+
   return (
     <Group height={groupHeight} x={0} y={0}>
       <Rect
@@ -53,15 +82,32 @@ const Header = () => {
         ]}
       />
       <Group
-        x={180}
+        x={175}
         y={25}
         height={50}
         width={20}
-        onClick={hideWidget}
-        onTap={hideWidget}
+        onClick={toggleWidget}
+        onTap={toggleWidget}
       >
-        <Circle radius={15} fill={HIDE_BUTTON} />
-        <Text text="x" y={-5} x={-3} fill={HIDE_BUTTON_TEXT} />
+        <Image
+          image={widgetViewState.isVisible ? showIcon : hideIcon}
+          height={30}
+          width={30}
+          x={-15}
+          y={-15}
+          onMouseEnter={handleCursor}
+          onMouseLeave={handleCursor}
+          fill={
+            widgetViewState.isVisible
+              ? SHOW_BUTTON_IS_VISIBLE_STROKE_COLOR
+              : HIDE_BUTTON_IS_VISIBLE_STROKE_COLOR
+          }
+          shadowOffsetY={1}
+          shadowOffsetX={1}
+          shadowBlur={2}
+          shadowColor="black"
+          strokeWidth={2}
+        />
       </Group>
 
       <Group x={10} y={10}>
@@ -112,12 +158,12 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
   const levelFilter = useWorkbenchStore((x) => x.levelFilter);
   const loadPosition = useWorkbenchStore((x) => x.loadPosition);
   const setWidgetViewState = useWorkbenchStore((x) => x.setWidgetViewState);
+  const showHidden = useWorkbenchStore((x) => x.showHidden);
   const { position, isVisible } = loadPosition(root.path) ?? getPosition(index);
-  const { x, y } = position;
-  const handleOnDragEnd = (event: KonvaEventObject<DragEvent>) => {
+  const { x, y } = position ?? {};
+  const handleOnDrag = (event: KonvaEventObject<DragEvent>) => {
     event.cancelBubble = true;
     setWidgetViewState(root.path, {
-      isVisible: true,
       position: { x: event.target.x(), y: event.target.y() },
     });
   };
@@ -144,11 +190,10 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
     // otherwise go out the top
     return [-x + 100, -y];
   };
-  const scopeInfo = `scopeX: ${scopeX}, scopeY: ${scopeY}, x: ${x}, y: ${y}`;
-  return isVisible ? (
+  return isVisible || showHidden ? (
     <ConstructContext.Provider value={props}>
-      <Group draggable x={x} y={y} onDragMove={handleOnDragEnd}>
-        {scopeX && scopeY ? (
+      <Group draggable x={x} y={y} onDragMove={handleOnDrag}>
+        {scopeX !== undefined && scopeY !== undefined ? (
           <Line
             stroke={LINE_COLOR}
             width={3}
@@ -161,7 +206,6 @@ export const ConstructWidget = (props: ConstructWidgetProps) => {
           widgetColor={CONSTRUCT_COLOR}
         />
         <Header />
-        <Text x={20} y={100} text={scopeInfo} fill="white" />
         {root.children && level <= levelFilter
           ? Object.values(root.children)
               .filter((child) => child.id !== 'Tree')
