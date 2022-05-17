@@ -1,4 +1,4 @@
-import { Set } from '../states';
+import { Set, WorkbenchState } from '../states';
 
 export interface Child {
   id: string;
@@ -11,7 +11,7 @@ type ConstructInfo = any;
 export interface CdkAppState {
   cdkApp?: CdkApp;
 
-  setCdkApp(cdkApp: CdkApp): void;
+  setCdkApp(state: WorkbenchState): void;
 }
 
 export interface CdkApp {
@@ -50,10 +50,10 @@ export function flattenChildren(children: Children): Child[] {
 
 export const cdkAppState = (set: Set): CdkAppState => ({
   cdkApp: undefined,
-  setCdkApp(cdkApp: CdkApp) {
+  setCdkApp(state: WorkbenchState) {
     set(() => {
-      const flattenedChildren = flattenChildren(cdkApp.tree.children);
-      return { cdkApp: { ...cdkApp, flattenedChildren } };
+      const flattenedChildren = flattenChildren(state.cdkApp!.tree.children);
+      return { ...state, cdkApp: { ...state.cdkApp, flattenedChildren } };
     });
   },
 });

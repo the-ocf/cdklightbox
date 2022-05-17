@@ -8,18 +8,9 @@ import { OpenPrompt } from './components/OpenPrompt';
 import { Footer } from './components/Footer';
 import IpcRendererEvent = Electron.IpcRendererEvent;
 
-function debounce(func: () => void, timeout = 300) {
-  let timer: any;
-  return (...args) => {
-    clearTimeout(timer);
-    timer = setTimeout(() => {
-      func.apply(this, args);
-    }, timeout);
-  };
-}
-
 function App() {
   const workingDirectory = useWorkbenchStore((state) => state.workingDirectory);
+  const resetState = useWorkbenchStore((state) => state.resetState);
   const setWorkingDirectory = useWorkbenchStore(
     (state) => state.setWorkingDirectory
   );
@@ -28,25 +19,39 @@ function App() {
   const undo = useWorkbenchStore((state) => state.undo);
   const redo = useWorkbenchStore((state) => state.redo);
 
-  /* useEffect(() => {
-    const unsub = useWorkbenchStore.subscribe(
-      (state) => state.widgets,
+  useEffect(() => {
+    return useWorkbenchStore.subscribe(
+      (state) => state,
       // @ts-ignore
-      (widgets) => {
-        debounce(() => {
-          ipcRenderer.send('workbench-state-update', {
-            // this will need to include more than just the widgets, as there will eventually be other parameters
-            // that will be important, like project settings and stuff.
-            widgets,
-          });
-        }, 1000)();
+      (state) => {
+        const {
+          levelFilter,
+          scale,
+          showHidden,
+          widgets,
+          workbenchPosition,
+          workingDirectory,
+        } = state;
+
+        if (!workingDirectory) {
+          // don't do anything if we don't have a workingDirectory
+          return;
+        }
+
+        ipcRenderer.send('workbench-state-update', {
+          levelFilter,
+          scale,
+          showHidden,
+          widgets,
+          workbenchPosition,
+          workingDirectory,
+        });
       }
     );
-    return unsub;
-  }); */
-
+  });
+  // @ts-ignore
   useEffect(() => {
-    const listener = (event) => {
+    const listener = () => {
       if (redo) redo();
     };
 
@@ -54,8 +59,20 @@ function App() {
     return () => handler.removeListener('redo', listener);
   }, [redo, workbenchState]);
 
+  // @ts-ignore
   useEffect(() => {
-    const listener = (event) => {
+    const listener = () => {
+      console.debug('Closing project');
+      resetState();
+    };
+
+    const handler = ipcRenderer.on('reset-state', listener);
+    return () => handler.removeListener('reset-state', listener);
+  }, [resetState]);
+
+  // @ts-ignore
+  useEffect(() => {
+    const listener = () => {
       if (undo) undo();
     };
 
@@ -63,13 +80,14 @@ function App() {
     return () => handler.removeListener('undo', listener);
   }, [undo, workbenchState]);
 
+  // @ts-ignore
   useEffect(() => {
     const listener = (
       _event: IpcRendererEvent,
       loadedState: WorkbenchState
     ) => {
       console.log('loaded state: ', loadedState);
-      loadState(loadedState.cdkApp);
+      loadState(loadedState);
       setWorkingDirectory(loadedState.workingDirectory);
     };
     const handler = ipcRenderer.on('load-workbench-state', listener);

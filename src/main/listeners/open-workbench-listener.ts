@@ -1,7 +1,7 @@
 import { dialog } from 'electron';
-import IpcMainEvent = Electron.IpcMainEvent;
 import { checkIfEmpty } from './fs-utils';
 import { openWorkbench } from '../providers/open-workbench';
+import IpcMainEvent = Electron.IpcMainEvent;
 
 export const openWorkbenchListener = async (event: IpcMainEvent) => {
   // @ts-ignore
@@ -22,9 +22,9 @@ export const openWorkbenchListener = async (event: IpcMainEvent) => {
   event.reply('status', {
     message: `Opening app at ${filePath}`,
   });
-  const cdkApp = await openWorkbench(filePath);
+  const state = await openWorkbench(filePath);
   event.reply('load-workbench-state', {
     workingDirectory: filePath,
-    cdkApp,
+    ...state,
   });
 };

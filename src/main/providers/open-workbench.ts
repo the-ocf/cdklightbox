@@ -10,7 +10,17 @@ export const openWorkbench = async (filePath: string) => {
     );
   }
   const contents = await fs.readFile(pathToTree, { encoding: 'utf-8' });
-  return JSON.parse(contents);
+  const pathToSavedState = path.join(filePath, '.lightbox', 'state.json');
+  let parsedState: any = {};
+
+  if (existsSync(pathToSavedState)) {
+    const stateContents = await fs.readFile(pathToSavedState, {
+      encoding: 'utf-8',
+    });
+    parsedState = JSON.parse(stateContents);
+  }
+  const parsedTree = JSON.parse(contents);
+  return { cdkApp: parsedTree, ...parsedState };
 };
 
 export default openWorkbench;

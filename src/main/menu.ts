@@ -205,7 +205,10 @@ export default class MenuBuilder {
             label: '&Close',
             accelerator: 'Ctrl+W',
             click: () => {
-              this.mainWindow.close();
+              BrowserWindow.getFocusedWindow()!.webContents.send(
+                'reset-state',
+                {}
+              );
             },
           },
         ],

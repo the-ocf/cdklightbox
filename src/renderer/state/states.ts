@@ -31,4 +31,6 @@ export interface WorkbenchState
     WorkbenchViewState,
     StatusState,
     ShowHiddenState,
-    UndoState {}
+    UndoState {
+  resetState(): void;
+}
