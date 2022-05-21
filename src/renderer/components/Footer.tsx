@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useWorkbenchStore } from '../state';
 import footer from './styles/footer.module.css';
 import { StatusMessage } from '../state/substates/status-state';
+import { ErrorMessage } from '../state/substates/error-state';
 import IpcRendererEvent = Electron.IpcRendererEvent;
 
 export function Errors() {
@@ -12,28 +13,30 @@ export function Errors() {
   const errors = useWorkbenchStore((state) => Object.entries(state.errors));
 
   // @ts-ignore
-  const errorListener = (event: IpcRendererEvent, newError: ErrorMessage) => {
-    addErrors(newError);
-  };
-
-  const statusListener = (
-    _event: IpcRendererEvent,
-    newStatus: StatusMessage
-  ) => {
-    addStatus(newStatus);
-  };
-
-  // @ts-ignore
   useEffect(() => {
+    const errorListener = (
+      _event: IpcRendererEvent,
+      newError: ErrorMessage
+    ) => {
+      addErrors(newError);
+    };
+
     const errorHandler = ipcRenderer.on('error', errorListener);
     return () => errorHandler.removeListener('error', errorListener);
-  }, [errorListener]);
+  }, [addErrors]);
 
   // @ts-ignore
   useEffect(() => {
+    const statusListener = (
+      _event: IpcRendererEvent,
+      newStatus: StatusMessage
+    ) => {
+      addStatus(newStatus);
+    };
+
     const errorHandler = ipcRenderer.on('status', statusListener);
     return () => errorHandler.removeListener('status', statusListener);
-  }, [statusListener]);
+  }, [addStatus]);
 
   return (
     <div className={`justify-end ${footer.container}`}>
