@@ -1,7 +1,8 @@
 import { ipcRenderer } from 'electron';
 import { useEffect } from 'react';
-import { ErrorMessage, useWorkbenchStore } from '../state';
+import { useWorkbenchStore } from '../state';
 import footer from './styles/footer.module.css';
+import { StatusMessage } from '../state/substates/status-state';
 import IpcRendererEvent = Electron.IpcRendererEvent;
 
 export function Errors() {
@@ -16,7 +17,7 @@ export function Errors() {
   };
 
   const statusListener = (
-    event: IpcRendererEvent,
+    _event: IpcRendererEvent,
     newStatus: StatusMessage
   ) => {
     addStatus(newStatus);
@@ -26,12 +27,13 @@ export function Errors() {
   useEffect(() => {
     const errorHandler = ipcRenderer.on('error', errorListener);
     return () => errorHandler.removeListener('error', errorListener);
-  });
+  }, [errorListener]);
 
+  // @ts-ignore
   useEffect(() => {
     const errorHandler = ipcRenderer.on('status', statusListener);
     return () => errorHandler.removeListener('status', statusListener);
-  });
+  }, [statusListener]);
 
   return (
     <div className={`justify-end ${footer.container}`}>

@@ -87,7 +87,7 @@ export function WorkbenchSurface() {
               <WorkbenchBackground />
             </Layer>
             <Layer>
-              <ConstructWidget root={tree} level={1} index={0} />
+              <ConstructWidget root={tree!} level={1} index={0} />
             </Layer>
           </ScaleContext.Provider>
         </StageRefContext.Provider>
