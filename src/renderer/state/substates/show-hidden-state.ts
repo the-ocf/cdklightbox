@@ -1,3 +1,4 @@
+import produce from 'immer';
 import { Set, WorkbenchState } from '../states';
 
 export interface ShowHiddenState {
@@ -8,9 +9,11 @@ export interface ShowHiddenState {
 export const showHiddenState = (set: Set): ShowHiddenState => {
   return {
     setShowHidden(value: boolean): void {
-      set((state: WorkbenchState) => {
-        state.showHidden = value;
-      });
+      set(
+        produce((state: WorkbenchState) => {
+          state.showHidden = value;
+        })
+      );
     },
     showHidden: false,
   };

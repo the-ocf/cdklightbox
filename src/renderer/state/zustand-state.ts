@@ -29,6 +29,7 @@ export const useWorkbenchStore = create<WorkbenchState>(
           ...workbenchViewState(set),
           ...showHiddenState(set),
           resetState() {
+            // @ts-ignore
             set(() => ({
               workingDirectory: '',
               widgets: {},

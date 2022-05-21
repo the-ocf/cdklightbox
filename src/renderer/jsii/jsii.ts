@@ -1,6 +1,7 @@
 import jsiiLibraries from './definitions/jsii.json';
 import jsiiCore from './definitions/jsii2.json';
 import jsiiConstructs from './definitions/jsii3.json';
+
 // import allAwsCdk from './definitions/@aws-cdk/all.json';
 
 export interface JsiiMetadata {
@@ -53,11 +54,17 @@ export const getInitializerProps = (forType: any) => {
   return forType.initializer.parameters;
 };
 
-const shortenRegex = /\.(\w*$)/;
+const shortenRegex = /([\w-]*)\.(\w*$)/;
 
 export function shorten(fqn: string) {
   const results = shortenRegex.exec(fqn);
-  return (results && results.length && results[1].replace('aws-', '')) || fqn;
+  if (!results || !results.length) {
+    return fqn;
+  }
+  if (results[1] === 'aws-cdk-lib') {
+    return results[2];
+  }
+  return `${results[1]}.${results[2]}`;
 }
 
 export const jsii: JsiiMetadata = {
