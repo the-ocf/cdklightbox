@@ -28,6 +28,18 @@ export const useWorkbenchStore = create<WorkbenchState>(
           ...widgetsViewState(set, get),
           ...workbenchViewState(set),
           ...showHiddenState(set),
+          resetState() {
+            // @ts-ignore
+            set(() => ({
+              workingDirectory: '',
+              widgets: {},
+              cdkApp: {},
+              scale: 1,
+              levelFilter: 3,
+              showHidden: false,
+              workbenchPosition: { x: 0, y: 0 },
+            }));
+          },
         }),
         { exclude: ['workbenchPosition', 'scale'], coolOffDurationMs: 1000 }
       ),

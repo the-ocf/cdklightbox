@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "es2021",
     "module": "commonjs",
-    "lib": ["dom", "es2021"],
+    "lib": [
+      "dom",
+      "es2021"
+    ],
     "declaration": true,
     "declarationMap": true,
     "jsx": "react-jsx",
@@ -19,7 +22,13 @@
     "allowSyntheticDefaultImports": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "outDir": "release/app/dist"
+    "outDir": "release/app/dist",
+    "skipLibCheck": true
   },
-  "exclude": ["test", "release/build", "release/app/dist", ".erb/dll"]
+  "exclude": [
+    "test",
+    "release/build",
+    "release/app/dist",
+    ".erb/dll"
+  ]
 }

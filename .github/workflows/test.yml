@@ -1,6 +1,6 @@
 name: Test
 
-on: [push, pull_request]
+on: [ push, pull_request ]
 
 jobs:
   release:
@@ -8,27 +8,27 @@ jobs:
 
     strategy:
       matrix:
-        os: [macos-latest, windows-latest, ubuntu-latest]
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v1
 
-      - name: Install Node.js and NPM
+      - name: Install Node.js and yarn
         uses: actions/setup-node@v2
         with:
           node-version: 16
-          cache: npm
+          cache: yarn
 
-      - name: npm install
+      - name: yarn install
         run: |
-          npm install
+          yarn install
 
-      - name: npm test
+      - name: yarn test
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          npm run package
-          npm run lint
-          npm exec tsc
-          npm test
+          yarn package
+          yarn lint
+          yarn tsc
+          yarn test
