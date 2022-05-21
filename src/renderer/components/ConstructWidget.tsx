@@ -13,14 +13,11 @@ import {
 } from '../colors';
 import { WidgetBackground } from './WidgetBackground';
 import { Child } from '../state/substates/cdk-app-state';
-import { shorten } from '../jsii';
 import { useWorkbenchStore } from '../state';
-import {
-  widgetsViewState,
-  WidgetViewState,
-} from '../state/substates/widget-view-state';
+import { WidgetViewState } from '../state/substates/widget-view-state';
 import hideImage from './assets/hide-svgrepo-com.svg';
 import showImage from './assets/show-svgrepo-com.svg';
+import { shorten } from './utils';
 import KonvaEventObject = Konva.KonvaEventObject;
 
 const ConstructContext = createContext({} as ConstructWidgetProps);
@@ -134,7 +131,9 @@ export interface ConstructWidgetProps {
   root: Child;
   level: number;
   index: number;
+  // eslint-disable-next-line react/require-default-props
   scopeX?: number;
+  // eslint-disable-next-line react/require-default-props
   scopeY?: number;
 }
 

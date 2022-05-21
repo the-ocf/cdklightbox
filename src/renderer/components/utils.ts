@@ -1,14 +1,27 @@
-export const handlePointerHover = (e) => {
+export const handlePointerHover = (e: any) => {
   // style stage container:
   const container = e.target.getStage().container();
   container.style.cursor = 'pointer';
 };
-export const handlePointerLeave = (e) => {
+export const handlePointerLeave = (e: any) => {
   const container = e.target.getStage().container();
   container.style.cursor = 'default';
 };
 
-export function getGradient(width, height, color) {
+const shortenRegex = /([\w-]*)\.(\w*$)/;
+
+export function shorten(fqn: string) {
+  const results = shortenRegex.exec(fqn);
+  if (!results || !results.length) {
+    return fqn;
+  }
+  if (results[1] === 'aws-cdk-lib') {
+    return results[2];
+  }
+  return `${results[1]}.${results[2]}`;
+}
+
+export function getGradient(width: number, height: number, color: string) {
   let marks;
   if (height > 300) {
     marks = 0.02;
@@ -32,15 +45,3 @@ export function getGradient(width, height, color) {
     ],
   };
 }
-
-export function getPosition(objectWidgetState, naturalHeight, width = 400) {
-  const { x, y, zipped } = objectWidgetState;
-  const calculatedHeight = zipped ? 25 : naturalHeight;
-  const calculatedXPosition = zipped ? 20 * zipped.level : x;
-  const calculatedYPosition = zipped ? 0 : y;
-  return { calculatedHeight, calculatedXPosition, calculatedYPosition };
-}
-
-export const handleUpdatePosition = (updatePosition, objectKey) => (event) => {
-  updatePosition(objectKey, { x: event.target.x(), y: event.target.y() });
-};

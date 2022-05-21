@@ -4,6 +4,7 @@ export interface Child {
   id: string;
   path: string;
   children?: Record<string, Child>;
+  constructInfo: ConstructInfo;
 }
 
 type ConstructInfo = any;

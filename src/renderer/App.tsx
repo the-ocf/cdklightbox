@@ -30,6 +30,7 @@ function App() {
           showHidden,
           widgets,
           workbenchPosition,
+          // eslint-disable-next-line @typescript-eslint/no-shadow
           workingDirectory,
         } = state;
 
