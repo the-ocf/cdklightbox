@@ -5,6 +5,7 @@ import {
   MenuItemConstructorOptions,
   shell,
 } from 'electron';
+import { buildFileMenu } from './menus/file';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -54,17 +55,15 @@ export default class MenuBuilder {
 
   buildDarwinTemplate(): MenuItemConstructorOptions[] {
     const subMenuAbout: DarwinMenuItemConstructorOptions = {
-      label: 'CDK Lcars',
+      label: 'CDK Lightbox',
       submenu: [
         {
-          label: 'About ElectronReact',
+          label: 'About',
           selector: 'orderFrontStandardAboutPanel:',
         },
         { type: 'separator' },
-        { label: 'Services', submenu: [] },
-        { type: 'separator' },
         {
-          label: 'Hide ElectronReact',
+          label: 'Hide CDK Lightbox',
           accelerator: 'Command+H',
           selector: 'hide:',
         },
@@ -189,30 +188,19 @@ export default class MenuBuilder {
         ? subMenuViewDev
         : subMenuViewProd;
 
-    return [subMenuAbout, subMenuEdit, subMenuView, subMenuWindow, subMenuHelp];
+    return [
+      subMenuAbout,
+      buildFileMenu(),
+      subMenuEdit,
+      subMenuView,
+      subMenuWindow,
+      subMenuHelp,
+    ];
   }
 
   buildDefaultTemplate() {
     const templateDefault = [
-      {
-        label: '&File',
-        submenu: [
-          {
-            label: '&Open',
-            accelerator: 'Ctrl+O',
-          },
-          {
-            label: '&Close',
-            accelerator: 'Ctrl+W',
-            click: () => {
-              BrowserWindow.getFocusedWindow()!.webContents.send(
-                'reset-state',
-                {}
-              );
-            },
-          },
-        ],
-      },
+      buildFileMenu(),
       {
         label: 'Edit',
         submenu: [
