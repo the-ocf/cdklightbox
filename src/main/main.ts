@@ -35,6 +35,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
   event.reply('ipc-example', msgTemplate('pong'));
 });
 
+// @ts-ignore
 app.on('open-file', loadRecentListener);
 ipcMain.on('open-workbench', openWorkbenchListener);
 ipcMain.on('workbench-state-update', workbenchStateUpdateListener);
