@@ -32,8 +32,8 @@
     ]
   },
   "build": {
-    "productName": "the-cdk-workbench",
-    "appId": "com.fourlittledogs.cdkworkbench",
+    "productName": "The CDK Lightbox",
+    "appId": "com.fourlittledogs.cdklightbox",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
