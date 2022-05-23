@@ -65,7 +65,7 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
-const createWindow = async () => {
+export const createWindow = async () => {
   if (isDevelopment) {
     await installExtensions();
   }

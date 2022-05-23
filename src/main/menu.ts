@@ -6,6 +6,7 @@ import {
   shell,
 } from 'electron';
 import { buildFileMenu } from './menus/file';
+import { buildUndoRedoMenu } from './menus/undo-redo';
 
 interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
   selector?: string;
@@ -85,19 +86,7 @@ export default class MenuBuilder {
     };
     const subMenuEdit: DarwinMenuItemConstructorOptions = {
       label: 'Edit',
-      submenu: [
-        { label: 'Undo', accelerator: 'Command+Z', selector: 'undo:' },
-        { label: 'Redo', accelerator: 'Shift+Command+Z', selector: 'redo:' },
-        { type: 'separator' },
-        { label: 'Cut', accelerator: 'Command+X', selector: 'cut:' },
-        { label: 'Copy', accelerator: 'Command+C', selector: 'copy:' },
-        { label: 'Paste', accelerator: 'Command+V', selector: 'paste:' },
-        {
-          label: 'Select All',
-          accelerator: 'Command+A',
-          selector: 'selectAll:',
-        },
-      ],
+      submenu: buildUndoRedoMenu(),
     };
     const subMenuViewDev: MenuItemConstructorOptions = {
       label: 'View',
@@ -203,24 +192,7 @@ export default class MenuBuilder {
       buildFileMenu(),
       {
         label: 'Edit',
-        submenu: [
-          {
-            label: 'Undo',
-            accelerator: 'Control+Z',
-            selector: 'undo:',
-            click() {
-              BrowserWindow.getFocusedWindow()!.webContents.send('undo');
-            },
-          },
-          {
-            label: 'Redo',
-            accelerator: 'Shift+Control+Z',
-            selector: 'redo:',
-            click() {
-              BrowserWindow.getFocusedWindow()!.webContents.send('redo');
-            },
-          },
-        ],
+        submenu: buildUndoRedoMenu(),
       },
       {
         label: '&View',
