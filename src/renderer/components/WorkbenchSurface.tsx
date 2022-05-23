@@ -1,4 +1,5 @@
 import { Layer, Stage } from 'react-konva';
+import { ipcRenderer } from 'electron';
 import { useEffect, useRef, useState } from 'react';
 import Konva from 'konva';
 import { useWorkbenchStore } from '../state';
@@ -8,6 +9,7 @@ import { ConstructWidget } from './ConstructWidget';
 import { LevelFilter } from './LevelFilter';
 import { ScaleContext, StageRefContext } from './Contexts';
 import KonvaEventObject = Konva.KonvaEventObject;
+import IpcRendererEvent = Electron.IpcRendererEvent;
 
 export function WorkbenchSurface() {
   const [size, setSize] = useState({
@@ -20,9 +22,17 @@ export function WorkbenchSurface() {
   const position = useWorkbenchStore((state) => state.workbenchPosition);
   const scale = useWorkbenchStore((state) => state.scale);
   const tree = useWorkbenchStore((state) => state.cdkApp?.tree);
-
+  const workingDirectory = useWorkbenchStore((state) => state.workingDirectory);
   const stageRef: any = useRef();
-
+  // @ts-ignore
+  useEffect(() => {
+    const handler = (event: IpcRendererEvent) => {
+      const dataUrl = stageRef.current.toDataURL({ pixelRatio: 4 });
+      event.sender.send('save-export', { dataUrl, workingDirectory });
+    };
+    ipcRenderer.on('get-export', handler);
+    return () => ipcRenderer.removeListener('get-export', handler);
+  });
   const handleWheel = (e: any) => {
     e.evt.preventDefault();
     const scaleBy = 1.02;

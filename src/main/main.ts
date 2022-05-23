@@ -18,6 +18,7 @@ import { resolveHtmlPath } from './util';
 import { workbenchStateUpdateListener } from './listeners/workbench-state-update-listener';
 import { openWorkbenchListener } from './listeners/open-workbench-listener';
 import { loadRecentListener } from './listeners/load-recent-listener';
+import { saveExportListener } from './listeners/save-export-listener';
 
 export default class AppUpdater {
   constructor() {
@@ -39,6 +40,7 @@ ipcMain.on('ipc-example', async (event, arg) => {
 app.on('open-file', loadRecentListener);
 ipcMain.on('open-workbench', openWorkbenchListener);
 ipcMain.on('workbench-state-update', workbenchStateUpdateListener);
+ipcMain.on('save-export', saveExportListener);
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');

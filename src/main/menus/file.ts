@@ -33,6 +33,12 @@ export function buildFileMenu(): MenuItemConstructorOptions {
         ],
       },
       {
+        label: 'Export...',
+        click: () => {
+          BrowserWindow.getFocusedWindow()!.webContents.send('get-export');
+        },
+      },
+      {
         label: '&Close',
         accelerator: 'CommandOrControl+W',
         click: () => {
