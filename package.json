@@ -1,6 +1,6 @@
 {
-  "name": "cdk-workbench",
-  "description": "A visual workbench for creating CDK applications.",
+  "name": "cdk-lightbox",
+  "description": "A visual lightbox for viewing CDK applications.",
   "scripts": {
     "build": "concurrently \"npm run build:main\" \"npm run build:renderer\"",
     "build:main": "cross-env NODE_ENV=production TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.main.prod.ts",
@@ -33,7 +33,7 @@
   },
   "build": {
     "productName": "The CDK Lightbox",
-    "appId": "com.fourlittledogs.cdklightbox",
+    "appId": "org.openconstructfoundation.cdklightbox",
     "asar": true,
     "asarUnpack": "**\\*.{node,dll}",
     "files": [
@@ -91,22 +91,22 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate"
+      "owner": "mbonig",
+      "repo": "lcars"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
+    "url": "git+https://github.com/mbonig/lcars.git"
   },
   "author": {
-    "name": "Matthew Bonig>",
+    "name": "Matthew Bonig",
     "email": "matthew.bonig@gmail.com",
-    "url": "https://cdkworkbench.com"
+    "url": "https://github.com/mbonig/lcars"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues"
+    "url": "https://github.com/mbonig/lcars/issues"
   },
   "keywords": [
     "electron",
@@ -119,7 +119,7 @@
     "hot",
     "reload"
   ],
-  "homepage": "https://github.com/electron-react-boilerplate/electron-react-boilerplate#readme",
+  "homepage": "https://github.com/mbonig/lcars#readme",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",
