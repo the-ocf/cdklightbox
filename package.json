@@ -109,15 +109,10 @@
     "url": "https://github.com/mbonig/lcars/issues"
   },
   "keywords": [
-    "electron",
-    "boilerplate",
-    "react",
-    "typescript",
-    "ts",
-    "sass",
-    "webpack",
-    "hot",
-    "reload"
+    "awscdk",
+    "cdk",
+    "lightbox",
+    "openconstructfoundation"
   ],
   "homepage": "https://github.com/mbonig/lcars#readme",
   "jest": {
@@ -221,6 +216,7 @@
     "webpack-merge": "^5.8.0"
   },
   "dependencies": {
+    "dmg-license": "^1.0.11",
     "electron-debug": "^3.2.0",
     "electron-log": "^4.4.6",
     "electron-updater": "^4.6.5",
