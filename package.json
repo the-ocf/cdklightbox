@@ -92,7 +92,8 @@
     "publish": {
       "provider": "github",
       "owner": "mbonig",
-      "repo": "lcars"
+      "repo": "lcars",
+      "releaseType": "release"
     }
   },
   "repository": {
