@@ -40,4 +40,4 @@ jobs:
         run: |
           yarn postinstall
           yarn build
-          npx electron-builder -- --publish always --win --mac --linux
+          npx electron-builder --publish always --win --mac --linux
