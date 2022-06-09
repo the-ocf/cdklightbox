@@ -7,8 +7,8 @@ on:
 
 jobs:
   publish:
-    permissions:
-      actions: write
+    permissions: write-all
+
     runs-on: ${{ matrix.os }}
 
     strategy:
