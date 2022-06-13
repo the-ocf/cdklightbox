@@ -16,16 +16,16 @@ Originally built with the Electron React Boilerplate, anyone looking to develop 
 Clone the repo and install dependencies. We recommend you fork the repository first and work off of your fork:
 
 ```bash
-git clone --depth 1 --branch main https://github.com/yourforkof/cdkworkbench.git cdkworkbench
-cd cdkworkbench
-npm install
+git clone --depth 1 --branch main https://github.com/yourforkof/cdklightbox.git cdklightbox
+cd cdklightbox
+yarn install
 ```
 
 **Having issues installing? See the [debugging guide](https://github.com/electron-react-boilerplate/electron-react-boilerplate/issues/400)**
 
 ## Starting Development
 
-Start the app in the `dev` environment:
+Local development is done with a simple:
 
 ```bash
 yarn start
@@ -33,14 +33,14 @@ yarn start
 
 ## Community
 
-Join the [cdk.dev Slack server](https://join.slack.com/t/cdk-dev/shared_invite/zt-xtpfmrqt-6ormYTA0hLdpMSAtTkM_2A) and subscribe to the #cdkworkbench channel to discuss development and ask questions.
+Join the [cdk.dev Slack server](https://cdk.dev) and subscribe to the #cdklightbox channel to discuss development and ask questions.
 
 ## Donations
 
 **Donations will ensure the following:**
 
 - 🔨 Long term maintenance of the project
-- 🛣 Addressing of [issues](https://github.com/mbonig/cdkworkbench/issues)
+- 🛣 Addressing of [issues](https://github.com/open-construct-foundation/cdklightbox/issues)
 - 🐛 Quick responses to bug reports and help requests
 
 ## Maintainers

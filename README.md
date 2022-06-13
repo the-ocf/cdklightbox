@@ -4,16 +4,13 @@ The CDK Workbench is a tool for visualizing your CDK applications.
 
 ## Installing
 
-Install using your favorite package manager, or via Github:
-
-### Homebrew
-### Apt
-### Snap
-### Chocolatey
+Head over to [Releases](https://github.com/mbonig/lcars/releases) and download the package for your operating system.
 
 ## Using
 
-Please watch this video to get an introduction to the CDK Workbench. If you have further questions, ask them at the cdk.dev's [Slack server](https://join.slack.com/t/cdk-dev/shared_invite/zt-xtpfmrqt-6ormYTA0hLdpMSAtTkM_2A) in the #cdkworkbench channel.
+Please watch this video to get an introduction to the CDK Workbench.
+
+If you have further questions, ask them at the cdk.dev's [Slack server](https://cdk.dev) in the #cdklightbox channel.
 
 ## Contributing
 
