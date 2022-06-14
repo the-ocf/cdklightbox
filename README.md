@@ -8,7 +8,7 @@ Head over to [Releases](https://github.com/the-ocf/cdklightbox/releases) and dow
 
 ## Using
 
-Please watch this video to get an introduction to the CDK Workbench.
+Please watch [this video](https://www.youtube.com/watch?v=OK9c-PuoYSM&ab_channel=MatthewBonig) to get an introduction to the CDK Workbench.
 
 If you have further questions, ask them at the cdk.dev's [Slack server](https://cdk.dev) in the #cdklightbox channel.
 
