@@ -91,23 +91,23 @@
     ],
     "publish": {
       "provider": "github",
-      "owner": "mbonig",
-      "repo": "lcars",
+      "owner": "the-ocf",
+      "repo": "cdklightbox",
       "releaseType": "release"
     }
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mbonig/lcars.git"
+    "url": "git+https://github.com/the-ocf/cdklightbox.git"
   },
   "author": {
     "name": "Matthew Bonig",
     "email": "matthew.bonig@gmail.com",
-    "url": "https://github.com/mbonig/lcars"
+    "url": "https://github.com/the-ocf/cdklightbox"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mbonig/lcars/issues"
+    "url": "https://github.com/the-ocf/cdklightbox/issues"
   },
   "keywords": [
     "awscdk",
@@ -115,7 +115,7 @@
     "lightbox",
     "openconstructfoundation"
   ],
-  "homepage": "https://github.com/mbonig/lcars#readme",
+  "homepage": "https://github.com/the-ocf/cdklightbox#readme",
   "jest": {
     "testURL": "http://localhost/",
     "testEnvironment": "jsdom",

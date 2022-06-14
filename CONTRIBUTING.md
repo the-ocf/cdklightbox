@@ -35,14 +35,6 @@ yarn start
 
 Join the [cdk.dev Slack server](https://cdk.dev) and subscribe to the #cdklightbox channel to discuss development and ask questions.
 
-## Donations
-
-**Donations will ensure the following:**
-
-- 🔨 Long term maintenance of the project
-- 🛣 Addressing of [issues](https://github.com/open-construct-foundation/cdklightbox/issues)
-- 🐛 Quick responses to bug reports and help requests
-
 ## Maintainers
 
 - [Matthew Bonig](https://github.com/mbonig)

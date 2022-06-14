@@ -6,7 +6,7 @@
   "author": {
     "name": "The CDK Lightbox",
     "email": "matthew.bonig@gmail.com",
-    "url": "https://github.com/mbonig/lcars"
+    "url": "https://github.com/the-ocf/cdklightbox"
   },
   "scripts": {
     "electron-rebuild": "node -r ts-node/register ../../.erb/scripts/electron-rebuild.js",
