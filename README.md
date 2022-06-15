@@ -2,6 +2,8 @@
 
 The CDK Workbench is a tool for visualizing your CDK applications.
 
+![Screenshot](./screenshot.png)
+
 ## Installing
 
 Head over to [Releases](https://github.com/the-ocf/cdklightbox/releases) and download the package for your operating system.
