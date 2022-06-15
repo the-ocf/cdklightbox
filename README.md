@@ -1,6 +1,6 @@
-# The CDK Workbench
+# The CDK Lightbox
 
-The CDK Workbench is a tool for visualizing your CDK applications.
+The CDK Lightbox is a tool for visualizing your CDK applications.
 
 ![Screenshot](./screenshot.png)
 
