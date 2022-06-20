@@ -6,7 +6,13 @@ The CDK Lightbox is a tool for visualizing your CDK applications.
 
 ## Installing
 
-Head over to [Releases](https://github.com/the-ocf/cdklightbox/releases) and download the package for your operating system.
+Head over to [Releases](https://github.com/the-ocf/cdklightbox/releases/latest) and download the package for your operating system.
+
+Mac M1 - Use the `arm64.dmg` release. Download and run to install.
+Mac Intel - Use the `.dmg` release.  Download and run to install.
+Windows - Use the `.exe` release.  Download and run to install.
+Linux - Use the `.AppImage` release. Download, `chmod +x` to execute.
+
 
 ## Using
 
