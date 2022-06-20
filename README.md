@@ -11,7 +11,13 @@ Head over to [Releases](https://github.com/the-ocf/cdklightbox/releases/latest) 
 Mac M1 - Use the `arm64.dmg` release. Download and run to install.
 Mac Intel - Use the `.dmg` release.  Download and run to install.
 Windows - Use the `.exe` release.  Download and run to install.
-Linux - Use the `.AppImage` release. Download, `chmod +x` to execute.
+Linux - Use the `.AppImage` release. Download, `chmod +x` to execute. For example:
+
+```shell
+curl -O https://github.com/the-ocf/cdklightbox/releases/download/v0.1.2/The-CDK-Lightbox-0.1.2.AppImage
+chmod +x The-CDK-Lightbox-0.1.2.AppImage
+./The-CDK-Lightbox-0.1.2.AppImage
+```
 
 
 ## Using
