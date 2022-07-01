@@ -1,7 +1,7 @@
-import IpcMainEvent = Electron.IpcMainEvent;
 import { dialog } from 'electron';
 import { writeFileSync } from 'fs';
 import path from 'path';
+import IpcMainEvent = Electron.IpcMainEvent;
 
 async function writeFile(filePath: string, dataUrl: any) {
   const [, encodedString] = dataUrl.split(',');

@@ -30,11 +30,12 @@ export default class AppUpdater {
   }
 }
 
-function debounce(func: () => void, timeout = 500) {
+function debounce(func: (..._args: any) => any, timeout = 500) {
   let timer: any;
   return (...args: []) => {
     clearTimeout(timer);
     timer = setTimeout(() => {
+      // @ts-ignore - I don't know how to annotate this type properly, so just ignoring
       func.apply(this, args);
     }, timeout);
   };
