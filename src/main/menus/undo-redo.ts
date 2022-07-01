@@ -1,7 +1,8 @@
 import { BrowserWindow } from 'electron';
 
-export const buildUndoRedoMenu = () => {
-  return [
+export const buildUndoRedoMenu = () => ({
+  label: 'Edit',
+  submenu: [
     {
       label: 'Undo',
       accelerator: 'CommandOrControl+Z',
@@ -18,5 +19,5 @@ export const buildUndoRedoMenu = () => {
         BrowserWindow.getFocusedWindow()!.webContents.send('redo');
       },
     },
-  ];
-};
+  ],
+});

@@ -8,7 +8,8 @@ import {
 import { buildFileMenu } from './menus/file';
 import { buildUndoRedoMenu } from './menus/undo-redo';
 
-interface DarwinMenuItemConstructorOptions extends MenuItemConstructorOptions {
+export interface DarwinMenuItemConstructorOptions
+  extends MenuItemConstructorOptions {
   selector?: string;
   submenu?: DarwinMenuItemConstructorOptions[] | Menu;
 }
@@ -65,35 +66,32 @@ export default class MenuBuilder {
         { type: 'separator' },
         {
           label: 'Hide CDK Lightbox',
-          accelerator: 'Command+H',
+          accelerator: 'CommandOrControl+H',
           selector: 'hide:',
         },
         {
           label: 'Hide Others',
-          accelerator: 'Command+Shift+H',
+          accelerator: 'CommandOrControl+Shift+H',
           selector: 'hideOtherApplications:',
         },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
         {
           label: 'Quit',
-          accelerator: 'Command+Q',
+          accelerator: 'CommandOrControl+Q',
           click: () => {
             app.quit();
           },
         },
       ],
     };
-    const subMenuEdit: DarwinMenuItemConstructorOptions = {
-      label: 'Edit',
-      submenu: buildUndoRedoMenu(),
-    };
+
     const subMenuViewDev: MenuItemConstructorOptions = {
       label: 'View',
       submenu: [
         {
           label: 'Reload',
-          accelerator: 'Command+R',
+          accelerator: 'CommandOrControl+R',
           click: () => {
             this.mainWindow.webContents.reload();
           },
@@ -131,10 +129,14 @@ export default class MenuBuilder {
       submenu: [
         {
           label: 'Minimize',
-          accelerator: 'Command+M',
+          accelerator: 'CommandOrControl+M',
           selector: 'performMiniaturize:',
         },
-        { label: 'Close', accelerator: 'Command+W', selector: 'performClose:' },
+        {
+          label: 'Close',
+          accelerator: 'CommandOrControl+W',
+          selector: 'performClose:',
+        },
         { type: 'separator' },
         { label: 'Bring All to Front', selector: 'arrangeInFront:' },
       ],
@@ -180,7 +182,7 @@ export default class MenuBuilder {
     return [
       subMenuAbout,
       buildFileMenu(),
-      subMenuEdit,
+      buildUndoRedoMenu(),
       subMenuView,
       subMenuWindow,
       subMenuHelp,
@@ -190,10 +192,8 @@ export default class MenuBuilder {
   buildDefaultTemplate() {
     const templateDefault = [
       buildFileMenu(),
-      {
-        label: 'Edit',
-        submenu: buildUndoRedoMenu(),
-      },
+      buildUndoRedoMenu(),
+
       {
         label: '&View',
         submenu:
