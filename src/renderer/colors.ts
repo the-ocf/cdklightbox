@@ -12,12 +12,12 @@ export const HIDE_BUTTON_TEXT = '#cccccc';
 export const WIDGET_COLORS = [
   '#a94600',
   '#a99200',
-  '#447200',
-  '#00724e',
-  '#005f72',
-  '#003372',
-  '#330072',
-  '#6c0072',
+  '#6b8546',
+  '#66c9af',
+  '#62aab6',
+  '#4e6a8e',
+  '#604681',
+  '#733e76',
 ];
 export const LINE_COLOR = 'white';
 export const HIDE_BUTTON_STROKE_COLOR = '#333333';
