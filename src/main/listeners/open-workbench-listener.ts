@@ -1,9 +1,12 @@
-import { dialog, app } from 'electron';
+import { app, dialog } from 'electron';
 import { checkIfEmpty } from './fs-utils';
 import { openWorkbench } from '../providers/open-workbench';
 import IpcMainEvent = Electron.IpcMainEvent;
 
-export const openWorkbenchListener = async (event: IpcMainEvent) => {
+export async function openWorkbenchHandler(
+  send: (bus: string, args: any) => void
+) {
+  console.log('opening dialog...');
   // @ts-ignore
   const dialogResults = await dialog.showOpenDialog({
     properties: ['openDirectory'],
@@ -14,18 +17,24 @@ export const openWorkbenchListener = async (event: IpcMainEvent) => {
   const filePath = dialogResults.filePaths[0];
   const isEmpty = checkIfEmpty(filePath);
   if (isEmpty) {
-    event.reply('error', {
+    send('error', {
       message: 'Directory is empty, cannot open an empty directory.',
     });
     return;
   }
-  event.reply('status', {
+  send('status', {
     message: `Opening app at ${filePath}`,
   });
   const state = await openWorkbench(filePath);
   app.addRecentDocument(filePath);
-  event.reply('load-workbench-state', {
+  send('load-workbench-state', {
     workingDirectory: filePath,
     ...state,
   });
+}
+
+export const openWorkbenchListener = async (event: IpcMainEvent) => {
+  const send = event.reply;
+  // @ts-ignore
+  await openWorkbenchHandler(send);
 };

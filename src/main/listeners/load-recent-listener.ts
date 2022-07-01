@@ -2,13 +2,18 @@ import { app, BrowserWindow } from 'electron';
 import { checkIfEmpty } from './fs-utils';
 import { openWorkbench } from '../providers/open-workbench';
 import IpcMainEvent = Electron.IpcMainEvent;
+import { createWindow } from '../main';
 
 export const loadRecentListener = async (
   _event: IpcMainEvent,
   filePath: string
 ) => {
   const isEmpty = checkIfEmpty(filePath);
-  const { webContents } = BrowserWindow.getFocusedWindow()!;
+  const focusedWindow = BrowserWindow.getFocusedWindow();
+  if (!focusedWindow) {
+    await createWindow();
+  }
+  const { webContents } = focusedWindow!;
   if (isEmpty) {
     webContents.send('error', {
       message: 'Directory is empty, cannot open an empty directory.',

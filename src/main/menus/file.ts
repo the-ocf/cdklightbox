@@ -1,5 +1,7 @@
 import { BrowserWindow } from 'electron';
+import { openWorkbenchHandler } from '../listeners/open-workbench-listener';
 import MenuItemConstructorOptions = Electron.MenuItemConstructorOptions;
+import { createWindow } from '../main';
 
 export function buildFileMenu(): MenuItemConstructorOptions {
   return {
@@ -7,7 +9,18 @@ export function buildFileMenu(): MenuItemConstructorOptions {
     submenu: [
       {
         label: '📂 &Open...',
-        accelerator: 'Ctrl+O',
+        accelerator: 'CommandOrControl+O',
+        click: async () => {
+          const focusedWindow = BrowserWindow.getFocusedWindow();
+          if (!focusedWindow) {
+            await createWindow();
+          }
+          const { webContents } = BrowserWindow.getFocusedWindow()!;
+
+          await openWorkbenchHandler((bus, args) =>
+            webContents.send(bus, args)
+          );
+        },
       },
       {
         label: 'Open Recent',
@@ -20,8 +33,14 @@ export function buildFileMenu(): MenuItemConstructorOptions {
         ],
       },
       {
+        label: 'Export...',
+        click: () => {
+          BrowserWindow.getFocusedWindow()!.webContents.send('get-export');
+        },
+      },
+      {
         label: '&Close',
-        accelerator: 'Ctrl+W',
+        accelerator: 'CommandOrControl+W',
         click: () => {
           BrowserWindow.getFocusedWindow()!.webContents.send('reset-state', {});
         },

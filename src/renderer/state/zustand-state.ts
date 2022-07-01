@@ -45,7 +45,7 @@ export const useWorkbenchStore = create<WorkbenchState>(
       ),
       {
         name: 'workbenchState',
-        getStorage: () => localStorage,
+        getStorage: () => sessionStorage,
       }
     )
   )
