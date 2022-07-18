@@ -19,6 +19,8 @@ import { workbenchStateUpdateListener } from './listeners/workbench-state-update
 import { openWorkbenchListener } from './listeners/open-workbench-listener';
 import { loadRecentListener } from './listeners/load-recent-listener';
 import { saveExportListener } from './listeners/save-export-listener';
+import { WorkbenchState } from '../renderer/state';
+import IpcMainEvent = Electron.IpcMainEvent;
 
 export default class AppUpdater {
   constructor() {
@@ -26,6 +28,17 @@ export default class AppUpdater {
     autoUpdater.logger = log;
     autoUpdater.checkForUpdatesAndNotify();
   }
+}
+
+function debounce(func: (..._args: any) => any, timeout = 500) {
+  let timer: any;
+  return (...args: []) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      // @ts-ignore - I don't know how to annotate this type properly, so just ignoring
+      func.apply(this, args);
+    }, timeout);
+  };
 }
 
 let mainWindow: BrowserWindow | null = null;
@@ -39,7 +52,12 @@ ipcMain.on('ipc-example', async (event, arg) => {
 // @ts-ignore
 app.on('open-file', loadRecentListener);
 ipcMain.on('open-workbench', openWorkbenchListener);
-ipcMain.on('workbench-state-update', workbenchStateUpdateListener);
+ipcMain.on(
+  'workbench-state-update',
+  debounce((event: IpcMainEvent, state: WorkbenchState) =>
+    workbenchStateUpdateListener(event, state)
+  )
+);
 ipcMain.on('save-export', saveExportListener);
 
 if (process.env.NODE_ENV === 'production') {
